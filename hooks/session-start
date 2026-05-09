@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# SessionStart hook for SLib plugin
+# Phase 1: 注入 using-slib/SKILL.md 全文作为引导上下文
+# Phase 2: 各 skill 的完整内容通过 Skill 工具按需懒加载
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+using_slib_content=$(cat "${PLUGIN_ROOT}/skills/using-slib/SKILL.md" 2>&1 \
+  || echo "Error reading using-slib skill")
+
+escape_for_json() {
+    local s="$1"
+    s="${s//\\/\\\\}"
+    s="${s//\"/\\\"}"
+    s="${s//$'\n'/\\n}"
+    s="${s//$'\r'/\\r}"
+    s="${s//$'\t'/\\t}"
+    printf '%s' "$s"
+}
+
+using_slib_escaped=$(escape_for_json "$using_slib_content")
+context="SLib 已加载。\n\n${using_slib_escaped}"
+context_escaped=$(escape_for_json "$context")
+
+# 适配各平台的 additionalContext 字段格式（与 superpowers 保持一致）
+if [ -n "${CURSOR_PLUGIN_ROOT:-}" ]; then
+    printf '{\n  "additional_context": "%s"\n}\n' "$context_escaped"
+elif [ -n "${CLAUDE_PLUGIN_ROOT:-}" ] && [ -z "${COPILOT_CLI:-}" ]; then
+    printf '{\n  "hookSpecificOutput": {\n    "hookEventName": "SessionStart",\n    "additionalContext": "%s"\n  }\n}\n' "$context_escaped"
+else
+    printf '{\n  "additionalContext": "%s"\n}\n' "$context_escaped"
+fi
+
+exit 0
