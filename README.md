@@ -14,7 +14,7 @@
 
 ## 安装
 
-**前置依赖**：git、python3（3.10+）、curl、[Claude Code](https://claude.ai/code)
+**前置依赖**：git、python3、curl、[Claude Code](https://claude.ai/code)
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/haxianhe/SLib/main/install.sh | bash
@@ -22,10 +22,9 @@ curl -sSL https://raw.githubusercontent.com/haxianhe/SLib/main/install.sh | bash
 
 安装脚本会：
 
-1. 检查并安装 SearXNG（本地搜索引擎）和 sxng-cli
-2. 配置 superpowers MCP（提供 brainstorming skill）
-3. 下载所有 skill 文件到 `~/.claude/skills/`
-4. 写入 PostToolUse hook 到 `~/.claude/settings.json`
+1. 配置 superpowers MCP（提供 brainstorming skill）
+2. 下载所有 skill 文件到 `~/.claude/skills/`
+3. 写入 PostToolUse hook 到 `~/.claude/settings.json`
 
 安装完成后**重启 Claude Code** 即可生效。
 

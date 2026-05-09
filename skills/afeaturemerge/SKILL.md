@@ -38,7 +38,7 @@ description: |
 |-------|--------------|
 | 参考系统名称及目标功能 | 见下方"参考系统缺失时的处理逻辑" |
 | 我方目标应用/模块 | **必须追问**，无法继续 |
-| 参考系统文档/代码位置 | 自行 `WebSearch` 搜索；若 WebSearch 不可用，改用 `sxng` 命令，无需追问 |
+| 参考系统文档/代码位置 | 自行 `WebSearch` 搜索；若 WebSearch 不可用，请用户提供链接 |
 | 我方代码位置 | 自行 `Grep` 搜索，无需追问 |
 | 特殊需求/约束 | 无则默认对齐参考系统 |
 
@@ -48,7 +48,7 @@ description: |
 
 **第一步：WebSearch 主动推荐**
 
-用 `WebSearch`（不可用时改 `sxng`）搜索与该功能最相关的开源项目，关键词示例：
+用 `WebSearch` 搜索与该功能最相关的开源项目，关键词示例：
 ```
 "{功能关键词} open source library best 2024"
 "{功能关键词} framework comparison"
@@ -160,8 +160,7 @@ AskUserQuestion({
 
 调研资源（按优先级）：
 - 用户提供的链接或文档位置：{用户提供的链接，若无则填"无"}
-- WebSearch 搜索官方文档（优先）；若 WebSearch 返回错误，改用：
-  `sxng --engines bing --limit 10 "{参考系统名} {功能名}"`
+- WebSearch 搜索官方文档（优先）；若 WebSearch 不可用，请用户提供文档链接
 - WebFetch 获取具体文档页面
 - GitHub 源码：通过 WebFetch 读取 raw 文件
 - 知识库 MCP（如当前 session 已配置）
@@ -323,7 +322,7 @@ AskUserQuestion({
 
 | 情况 | 处理方式 |
 |------|---------|
-| 参考系统文档找不到 | `WebSearch` 搜索，若不可用则用 `sxng --engines bing` 命令搜索，或请用户提供链接 |
+| 参考系统文档找不到 | `WebSearch` 搜索，若不可用则请用户提供链接 |
 | 参考系统是闭源/内部系统 | 说明情况，请用户提供文档或描述 |
 | 我们系统代码范围不确定 | 先用 `Grep` 搜关键词，逐步缩小范围 |
 | 无现有实现 | 记录"无现有实现"，文档三的分析全部走"不可参考"流程（即 brainstorming 独立设计） |
