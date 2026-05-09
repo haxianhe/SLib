@@ -14,17 +14,12 @@
 
 ## 安装
 
-**前置依赖**：git、python3、curl、[Claude Code](https://claude.ai/code)
+**前置依赖**：[Claude Code](https://claude.ai/code)
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/haxianhe/SLib/main/install.sh | bash
+claude plugins marketplace add haxianhe/SLib
+claude plugins install slib
 ```
-
-安装脚本会：
-
-1. 配置 superpowers MCP（提供 brainstorming skill）
-2. 下载所有 skill 文件到 `~/.claude/skills/`
-3. 写入 PostToolUse hook 到 `~/.claude/settings.json`
 
 安装完成后**重启 Claude Code** 即可生效。
 
@@ -97,7 +92,13 @@ curl -sSL https://raw.githubusercontent.com/haxianhe/SLib/main/install.sh | bash
 
 ```
 SLib/
-├── install.sh              # 一键安装脚本
+├── .claude-plugin/
+│   ├── plugin.json         # plugin 元数据
+│   └── marketplace.json    # marketplace 声明
+├── hooks/
+│   ├── hooks.json          # hook 配置（SessionStart + PostToolUse）
+│   ├── session-start       # 会话启动时注入 using-slib
+│   └── run-hook.cmd        # 跨平台 hook 入口
 ├── skills/
 │   ├── using-slib/         # 会话引导文件（自动注入）
 │   ├── afeaturemerge/      # 竞品功能分析 skill
