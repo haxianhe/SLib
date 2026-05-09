@@ -145,6 +145,8 @@ AskUserQuestion({
 在发出调用前，将以下 prompt 模板中的占位符替换为第一步确认的真实值，再下发给 subagent。
 两个 subagent 完成后，在主 context 中汇总其结构化报告，不要将原始调研内容搬入主 context。
 
+**启动 subagent 前**：在主 context 调用 `Skill({ skill: "slib:search" })` 加载多层检索策略，确认策略已加载后再发起并行调用。
+
 ### Subagent A：参考系统调研
 
 **prompt 模板**（将 `{...}` 替换为真实值后下发）：
@@ -158,12 +160,26 @@ AskUserQuestion({
 3. 典型使用示例（保留最能说明问题的代码片段）
 4. 已知限制或注意事项
 
-调研资源（按优先级）：
-- 用户提供的链接或文档位置：{用户提供的链接，若无则填"无"}
-- WebSearch 搜索官方文档（优先）；若 WebSearch 不可用，请用户提供文档链接
-- WebFetch 获取具体文档页面
-- GitHub 源码：通过 WebFetch 读取 raw 文件
-- 知识库 MCP（如当前 session 已配置）
+调研资源——按以下 4 层顺序尝试，失败自动降级，不要停下来询问用户：
+
+Layer 1：WebSearch（首选）
+  WebSearch({ query: "{参考系统名} {功能名} 官方文档 OR github" })
+  失败条件：报错 / 空结果 / 疑似防火墙拦截页（含"访问受限""sign in""403"等）→ 跳至 Layer 2
+
+Layer 2：WebFetch
+  WebFetch({ url: "<Layer 1 返回的可信 URL 或用户提供的链接>", prompt: "提取与「{功能名}」相关的核心信息" })
+  失败条件：403 / 连接拒绝 / 超时 / 内容少于 200 字 → 跳至 Layer 3
+
+Layer 3：curl
+  Bash({ command: "curl -sL --max-time 15 -A 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36' '<URL>' | sed 's/<[^>]*>//g' | grep -v '^$' | head -200" })
+  失败条件：返回空 / 内容少于 100 字 / 含"403""404""blocked" → 跳至 Layer 4
+
+Layer 4：chrome-mcp
+  mcp__chrome-mcp__get_page_content(url="<URL>")
+  若 ECONNREFUSED：pkill -f mcp-chrome-bridge && sleep 2 后重试一次
+
+用户提供的链接或文档位置：{用户提供的链接，若无则填"无"}
+知识库 MCP（如当前 session 已配置）可作为补充
 
 要求：
 - 结论必须有文档或代码来源，不要猜测

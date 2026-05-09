@@ -9,6 +9,7 @@
 | [`afeaturemerge`](#afeaturemerge) | 参考竞品 / 开源项目的功能，规划在自己系统中的实现方案 |
 | [`learning`](#learning) | 系统学习一门新技术，生成学习路径与实践项目 |
 | [`summary`](#summary) | 抓取链接内容，提炼总结并写入本地知识库 |
+| [`search`](#search) | 多层降级检索，自动应对企业防火墙阻断外网访问的问题 |
 
 ---
 
@@ -43,7 +44,7 @@ claude plugins install slib
 用户：调研 LangGraph 的 checkpoint 机制，给出我们对话服务的状态持久化方案
 ```
 
-**执行流程**：收集信息 → 确认理解 → 调研参考系统 → 分析自身现状 → 产出需求文档与技术方案
+**执行流程**：收集信息 → 确认理解 → 调用 `search`（多层降级）调研参考系统 → 分析自身现状 → 产出需求文档与技术方案
 
 ---
 
@@ -63,7 +64,7 @@ claude plugins install slib
 用户：我想学 Kubernetes，从运维角度切入
 ```
 
-**输出内容**：技术定位分析、知识树、资源推荐（书 / 文章 / 项目）、实践项目设计、学习时间线
+**执行流程**：收集信息 → 技术定位分析 → 知识树 → 调用 `search` 搜索最新资源 → 实践项目设计 → 调用 `summary` 保存学习计划到 `~/knowledge/`
 
 ---
 
@@ -88,6 +89,28 @@ claude plugins install slib
 
 ---
 
+### search
+
+**触发条件**：
+
+- "帮我搜索 / 查一下 / 找一下 X"
+- 技术问题、工具用法、行业信息等需要检索资料的场景
+- "X 是什么"、"怎么做 X"、"有没有 X 相关资料"
+- WebSearch / WebFetch 调用失败，需要切换检索方式
+- 访问不了外网、被防火墙拦截、网络受限等情形
+
+**用法示例**：
+
+```
+用户：帮我搜索 Rust async runtime 的原理
+用户：查一下 Kubernetes HPA 的配置参数
+用户：WebSearch 访问失败，帮我换个方式搜一下
+```
+
+**执行流程**：WebSearch → WebFetch → curl → chrome-mcp，依次降级直到获得有效内容
+
+---
+
 ## 目录结构
 
 ```
@@ -104,7 +127,8 @@ SLib/
 │   ├── afeaturemerge/      # 竞品功能分析 skill
 │   │   └── hooks/          # PostToolUse hook
 │   ├── learning/           # 技术学习 skill
-│   └── summary/            # 文章总结 skill
+│   ├── summary/            # 文章总结 skill
+│   └── search/             # 多层降级检索 skill
 └── package.json
 ```
 
