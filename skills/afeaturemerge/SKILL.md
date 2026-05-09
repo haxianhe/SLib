@@ -216,7 +216,7 @@ Layer 4：chrome-mcp
 
 基于调研结果，产出三份结构化文档，每份完成后立即写入当前项目的 `docs/afeaturemerge/` 目录。
 
-> 若已配置 `afeaturemerge-sync` hook，文件写入后会自动触发云端知识库同步提示，无需在 skill 内手动处理。
+> 写入后由 SLib 通用 `slib-sync` hook 自动判断是否同步到云端知识库，无需在 skill 内手动处理。
 
 ### 文档一：参考系统功能实现分析
 

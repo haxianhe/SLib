@@ -121,11 +121,11 @@ SLib/
 ├── hooks/
 │   ├── hooks.json          # hook 配置（SessionStart + PostToolUse）
 │   ├── session-start       # 会话启动时注入 using-slib
+│   ├── slib-sync.sh        # 通用 .md 写入云端同步提示 hook
 │   └── run-hook.cmd        # 跨平台 hook 入口
 ├── skills/
 │   ├── using-slib/         # 会话引导文件（自动注入）
 │   ├── afeaturemerge/      # 竞品功能分析 skill
-│   │   └── hooks/          # PostToolUse hook
 │   ├── learning/           # 技术学习 skill
 │   ├── summary/            # 文章总结 skill
 │   └── search/             # 多层降级检索 skill
