@@ -16,6 +16,7 @@ description: SLib 引导文件，在会话开始时注入。列出所有可用 s
 | `slib:afeaturemerge` | 用户说"参考 X 的 Y 功能在我们系统实现"、"对标 / 借鉴 / 调研 X"、想在项目中加某功能但不知道参考谁 |
 | `slib:learning` | 用户说"我想学 X"、"怎么学 X"、"X 的学习路径"、想了解某技术与已知技术的关系 |
 | `slib:summary` | 用户粘贴 URL 要求总结/提炼/保存、说"帮我总结这篇"、"记录到知识库" |
+| `slib:search` | 用户说"搜索/查找/检索 X"、需要获取信息时外网可能被防火墙拦截、WebSearch/WebFetch 调用失败后需降级到内网检索 |
 
 ---
 
@@ -37,6 +38,7 @@ description: SLib 引导文件，在会话开始时注入。列出所有可用 s
 Skill({ skill: "slib:afeaturemerge" })
 Skill({ skill: "slib:learning" })
 Skill({ skill: "slib:summary" })
+Skill({ skill: "slib:search" })
 ```
 
 ---
