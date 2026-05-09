@@ -1,0 +1,23 @@
+{
+  "name": "slib",
+  "metadata": {
+    "description": "haxianhe 的个人知识工具库"
+  },
+  "owner": {
+    "name": "haxianhe"
+  },
+  "plugins": [
+    {
+      "name": "slib",
+      "description": "个人知识工具库，包含竞品分析（afeaturemerge）、技术学习（learning）、链接总结入库（summary）等 skill。",
+      "author": {
+        "name": "haxianhe"
+      },
+      "source": {
+        "source": "github",
+        "repo": "haxianhe/SLib",
+        "commit": "main"
+      }
+    }
+  ]
+}

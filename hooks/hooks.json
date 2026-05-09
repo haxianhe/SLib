@@ -11,6 +11,18 @@
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/skills/afeaturemerge/hooks/afeaturemerge-sync.sh\"",
+            "timeout": 30
+          }
+        ]
+      }
     ]
   }
 }
