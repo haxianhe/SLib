@@ -7,7 +7,7 @@
 | Skill | 适用场景 |
 |-------|---------|
 | [`afeaturemerge`](#afeaturemerge) | 参考竞品 / 开源项目的功能，规划在自己系统中的实现方案 |
-| [`learning`](#learning) | 系统学习一门新技术，生成学习路径与实践项目 |
+| [`learning`](#learning) | 用 5W1H 六维度（What/Why/Who/When/Where/How）解构一个技术或概念 |
 | [`summary`](#summary) | 抓取链接内容，提炼总结并写入本地知识库 |
 | [`search`](#search) | 多层降级检索，自动应对企业防火墙阻断外网访问的问题 |
 | [`architecture-diagram`](#architecture-diagram) | 专业图表绘制，覆盖 drawio / mermaid / PlantUML 三种格式 |
@@ -51,21 +51,35 @@ claude plugins install slib
 
 ### learning
 
+**定位**：用 **5W1H 六维度**（What / Why / Who / When / Where / How）把一个技术或概念彻底拆开看清楚——不是学习路径规划，而是概念深度解构。
+
 **触发条件**：
 
-- "我想学 X"、"帮我学 X"、"怎么学 X"
-- "X 的学习路径是什么"
-- "X 和我已经会的 Y 有什么关系"
+- "我想理解 X"、"5W1H 解读 X"、"帮我把 X 讲清楚"
+- "X 是什么 / 为什么有 X / X 怎么用" 并希望得到系统性回答
+- 粘贴一篇文章/文档 URL，希望用 5W1H 维度提炼
+- 想全面把握一个陌生概念的本质、动机、边界与机制
 
 **用法示例**：
 
 ```
-用户：我想学 Rust，我有 Java 背景
-用户：帮我系统学习 RAG，我了解基础的 LLM 调用
-用户：我想学 Kubernetes，从运维角度切入
+用户：5W1H 解读 CRDT
+用户：帮我把 Raft 协议讲清楚，我了解 Paxos
+用户：https://example.com/event-sourcing 用 5W1H 提炼一下
 ```
 
-**执行流程**：收集信息 → 技术定位分析 → 知识树 → 调用 `search` 搜索最新资源 → 实践项目设计 → 调用 `summary` 保存学习计划到 `~/knowledge/`
+**六个维度**：
+
+| 维度 | 回答什么 |
+|---|---|
+| 🎯 What | 本质、一句话定义、关键术语 |
+| 💡 Why | 原本怎么做、为什么不够、它怎么破局 |
+| 👥 Who | 起源、采用者、社区与生态、谁不该用 |
+| 📅 When | 历史脉络、什么时候该选、什么时候不该选 |
+| 🗺️ Where | 部署位置、适用场景、边界、与相邻方案对比 |
+| 🔧 How | 核心机制、最短上手路径、常见坑、进阶方向 |
+
+**执行流程**：识别输入（概念名 / URL）→ URL 时先抓取 → 摘要确认 → 6 维解构 → 询问是否落盘 → 选"保存"时调用 `summary` 内联模式写入 `~/knowledge/`
 
 ---
 
