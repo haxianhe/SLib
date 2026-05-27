@@ -68,18 +68,71 @@ Bash({
 
 ---
 
-### Layer 4：chrome-mcp
+### Layer 4：agent-browser
 
-利用浏览器已有登录态和 JS 渲染能力获取内容：
+利用真实浏览器的 JS 渲染、Cookie 与已有登录态拿到完整页面。通过 Bash 调用 `agent-browser` CLI。
 
+#### 公开页面（默认路径）
+
+```bash
+agent-browser open <URL>
+agent-browser get text body          # 或 agent-browser snapshot
+agent-browser close
 ```
-mcp__chrome-mcp__get_page_content(url="<URL>")
+
+返回内容过短或拿不到正文 → 试一次 `snapshot`；仍失败则视为 Layer 4 失败。
+
+#### 登录页判断
+
+满足任一即视为需要登录：
+- URL 跳转到 `/login`、`/signin`、`/sso/`、`login.*.com` 等
+- `snapshot` 看到"登录"、"Sign in"、"Log in"、密码输入框
+- `get text body` 抓到的内容只剩登录提示
+
+#### 登录页：复用本地 Chrome 登录态（优先级 1，强烈推荐）
+
+```bash
+agent-browser open <URL> --headed --profile Default
+agent-browser snapshot -i             # 确认已经登录到正常页面
+agent-browser state save ~/.agent-browser/<domain>.json
+agent-browser get text body
+agent-browser close
 ```
 
-若 chrome-mcp 连接失败（ECONNREFUSED / tool not found）：
-1. `Bash("pkill -f mcp-chrome-bridge && sleep 2")`
-2. 重试一次
-3. 仍失败则告知用户所有层级均已尝试
+`<domain>` 取主域名（如 `example.com`）。SSO 类站点 90% 直通。
+
+#### 登录页：Chrome 也没登录（优先级 2）
+
+弹窗已开 → 告诉用户「请在弹出的浏览器里完成登录，登录后回复我」→ 等用户确认后：
+
+```bash
+agent-browser snapshot -i             # 确认登录成功
+agent-browser state save ~/.agent-browser/<domain>.json
+agent-browser get text body
+agent-browser close
+```
+
+#### 后续访问同域名（headless 复用 state）
+
+```bash
+agent-browser --state ~/.agent-browser/<domain>.json open <URL>
+agent-browser --state ~/.agent-browser/<domain>.json get text body
+agent-browser --state ~/.agent-browser/<domain>.json close
+```
+
+#### 失败判断
+
+- `agent-browser` 命令本身不存在或报错（exit code 非 0）
+- 三种姿势（公开 / 复用 Chrome / state 复用）都拿不到 ≥200 字正文
+- 用户拒绝在弹窗中完成登录
+
+满足以上任一 → 告知用户所有层级均已尝试，进入「全部失败处理」。
+
+#### 注意事项
+
+- **不要反复尝试 cookies/skills/snapshot 自己摸索登录态**，按上面优先级走
+- 同一 URL 不重试超过一次（除了「无 state → 弹窗登录 → 存 state → 再抓一次」这一连贯流程）
+- GitHub README 优先 `curl -sL https://raw.githubusercontent.com/<owner>/<repo>/main/README.md` 直接拿原文，比浏览器快
 
 ---
 

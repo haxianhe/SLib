@@ -122,7 +122,7 @@ claude plugins install slib
 用户：WebSearch 访问失败，帮我换个方式搜一下
 ```
 
-**执行流程**：WebSearch → WebFetch → curl → chrome-mcp，依次降级直到获得有效内容
+**执行流程**：WebSearch → WebFetch → curl → agent-browser，依次降级直到获得有效内容
 
 ---
 
