@@ -70,11 +70,40 @@ description: |
 
 ### Step 5：输出/打开
 
+**打开优先级:本地 draw.io 桌面 app > 浏览器(MCP 工具)**
+
+drawio / mermaid 都可以通过本地 draw.io 桌面 app 预览。流程如下:
+
+#### 5.1 检测本地是否安装了 draw.io 桌面 app
+
+执行(Bash):
+
+```bash
+ls -d "/Applications/draw.io.app" 2>/dev/null || mdfind "kMDItemCFBundleIdentifier == 'com.jgraph.drawio.desktop'" 2>/dev/null | head -1
+```
+
+- **有输出**(路径) → 走 **5.2 本地 app 打开**
+- **无输出**(空) → 走 **5.3 浏览器打开**
+
+> 跨平台说明:macOS 用上述命令;Linux/Windows 暂只走浏览器路径(MCP 工具)。
+
+#### 5.2 本地 app 打开(优先)
+
+| 格式 | 步骤 |
+|------|------|
+| drawio | 1) 将 XML 写入 `.drawio` 文件(优先用户指定路径,否则放当前目录或 `~/Downloads/`);2) `open -a "draw.io" /path/to/file.drawio` |
+| mermaid | 1) 将 mermaid 源码写入 `.mmd` 文件;2) `open -a "draw.io" /path/to/file.mmd`(draw.io app 支持 mermaid 导入)。若用户更想原生 mermaid 体验,可直接输出代码块跳过 |
+| PlantUML | 本地 app 不支持,跳到 5.3 |
+
+#### 5.3 浏览器打开(fallback)
+
 | 格式 | 输出方式 |
 |------|---------|
-| drawio | 调 `mcp__drawio__open_drawio_xml`(详图) 或 `mcp__drawio__open_drawio_mermaid`(简图) 直接打开预览;同时保存 `.drawio` 文件供用户后续编辑 |
-| mermaid | 输出代码块,可调 `mcp__drawio__open_drawio_mermaid` 让用户直接看效果 |
+| drawio | 调 `mcp__drawio__open_drawio_xml`(详图) 直接在浏览器打开预览;同时保存 `.drawio` 文件 |
+| mermaid | 输出代码块 + 调 `mcp__drawio__open_drawio_mermaid` 让用户在浏览器看效果 |
 | PlantUML | 输出 `.puml` 代码块;告知用户可在 PlantUML Online / IDEA 插件中渲染(无 MCP 直渲工具) |
+
+> 无论走哪条路径,**都要把源文件保存到磁盘**,方便用户后续二次编辑。
 
 ---
 
