@@ -228,7 +228,7 @@ AskUserQuestion({
    - **字体规范**:统一字号(标题 / 节点 / 注释三档),中文用无衬线(PingFang SC / Source Han Sans),不混用花体
    - **风格统一**:同一篇 md 内多张图共用同一套配色与圆角风格,不允许"图 1 是方角扁平、图 2 是圆角拟物"
    - 不确定时先调用 `slib:architecture-diagram` 让其产出 XML,再回到本 skill 落盘
-3. **优先调 `mcp__drawio__open_drawio_xml`**(详图)或 `mcp__drawio__open_drawio_mermaid`(简图)打开预览
+3. **调 `mcp__drawio__open_drawio_xml`** 打开预览
    - MCP 工具会优先唤起本地 drawio 桌面 app;未安装时自动降级到浏览器(diagrams.net)
    - 用户无需手动选择
 4. **同时落盘**为 `.drawio` 文件,路径与 markdown 同目录:

@@ -1,8 +1,8 @@
 ---
 name: architecture-diagram
 description: |
-  专业图表绘制助手，覆盖架构图、流程图、时序图、类图、思维导图等场景，输出 drawio / mermaid / PlantUML 三种格式。触发条件：
-  - 用户说"画一个架构图 / 流程图 / 时序图 / 思维导图"、"帮我画图"、"用 drawio / mermaid / plantuml 画"
+  专业图表绘制助手，覆盖架构图、流程图、时序图、类图、思维导图等场景，输出 drawio 格式。触发条件：
+  - 用户说"画一个架构图 / 流程图 / 时序图 / 思维导图"、"帮我画图"、"用 drawio 画"
   - 用户描述系统结构、流程步骤、模块依赖、调用链路并希望可视化
   - 用户提供既有图表想要修改或补充
   - 即使用户没说"画图"，只要意图是把结构 / 流程 / 关系可视化呈现，也应触发
@@ -16,10 +16,10 @@ description: |
 
 ---
 
-## 工作流(五步)
+## 工作流(四步)
 
 ```
-需求分析 → 格式选择 → 结构设计 → 样式应用 → 输出/打开
+需求分析 → 结构设计 → 样式应用 → 输出/打开
 ```
 
 ### Step 1：需求分析
@@ -36,24 +36,7 @@ description: |
 
 **复杂度判断**：节点 > 10 个、层级 > 3 层、或用户明确说"要画好看"/"要正式"时，进入 **确认门**(见末尾)。
 
-### Step 2：格式选择
-
-按场景匹配，**不要默认 drawio**：
-
-| 场景 | 推荐格式 | 理由 |
-|------|---------|------|
-| 复杂架构图、需要像素级控制、要交付给非技术受众 | **drawio** | 自定义样式、专业排版、可在 drawio 编辑器直接打开 |
-| UML 标准图(类图、时序图、用例图、活动图)、对象关系建模 | **PlantUML** | UML 标准语法、与 IDE 集成、文档/代码同步 |
-| 快速原型、概念草图、需要进 git 版本控制、Markdown 文档内嵌 | **mermaid** | 文本即图、轻量、GitHub/GitLab 原生渲染 |
-
-**决策口诀**：
-- "要交付演示" → drawio
-- "要建模/UML 标准" → PlantUML
-- "要进 README/文档" → mermaid
-
-用户明确指定时遵循用户指定，不要替换。
-
-### Step 3：结构设计
+### Step 2：结构设计
 
 在写代码/XML 前，先在脑中(必要时用文字)规划：
 
@@ -64,17 +47,17 @@ description: |
 
 不要从代码开始编辑——先想清楚再动手。
 
-### Step 4：样式应用
+### Step 3：样式应用
 
 应用配色方案(见下文 **配色规范** 章节)，统一字体、圆角、边距。**禁止每个节点用不同色**，按角色分类配色。
 
-### Step 5：输出/打开
+### Step 4：输出/打开
 
 **打开优先级:本地 draw.io 桌面 app > 浏览器(MCP 工具)**
 
-drawio / mermaid 都可以通过本地 draw.io 桌面 app 预览。流程如下:
+drawio 可以通过本地 draw.io 桌面 app 预览。流程如下:
 
-#### 5.1 检测本地是否安装了 draw.io 桌面 app
+#### 4.1 检测本地是否安装了 draw.io 桌面 app
 
 执行(Bash):
 
@@ -82,26 +65,19 @@ drawio / mermaid 都可以通过本地 draw.io 桌面 app 预览。流程如下:
 ls -d "/Applications/draw.io.app" 2>/dev/null || mdfind "kMDItemCFBundleIdentifier == 'com.jgraph.drawio.desktop'" 2>/dev/null | head -1
 ```
 
-- **有输出**(路径) → 走 **5.2 本地 app 打开**
-- **无输出**(空) → 走 **5.3 浏览器打开**
+- **有输出**(路径) → 走 **4.2 本地 app 打开**
+- **无输出**(空) → 走 **4.3 浏览器打开**
 
 > 跨平台说明:macOS 用上述命令;Linux/Windows 暂只走浏览器路径(MCP 工具)。
 
-#### 5.2 本地 app 打开(优先)
+#### 4.2 本地 app 打开(优先)
 
-| 格式 | 步骤 |
-|------|------|
-| drawio | 1) 将 XML 写入 `.drawio` 文件(优先用户指定路径,否则放当前目录或 `~/Downloads/`);2) `open -a "draw.io" /path/to/file.drawio` |
-| mermaid | 1) 将 mermaid 源码写入 `.mmd` 文件;2) `open -a "draw.io" /path/to/file.mmd`(draw.io app 支持 mermaid 导入)。若用户更想原生 mermaid 体验,可直接输出代码块跳过 |
-| PlantUML | 本地 app 不支持,跳到 5.3 |
+1. 将 XML 写入 `.drawio` 文件(优先用户指定路径,否则放当前目录或 `~/Downloads/`)
+2. `open -a "draw.io" /path/to/file.drawio`
 
-#### 5.3 浏览器打开(fallback)
+#### 4.3 浏览器打开(fallback)
 
-| 格式 | 输出方式 |
-|------|---------|
-| drawio | 调 `mcp__drawio__open_drawio_xml`(详图) 直接在浏览器打开预览;同时保存 `.drawio` 文件 |
-| mermaid | 输出代码块 + 调 `mcp__drawio__open_drawio_mermaid` 让用户在浏览器看效果 |
-| PlantUML | 输出 `.puml` 代码块;告知用户可在 PlantUML Online / IDEA 插件中渲染(无 MCP 直渲工具) |
+调 `mcp__drawio__open_drawio_xml` 直接在浏览器打开预览;同时保存 `.drawio` 文件。
 
 > 无论走哪条路径,**都要把源文件保存到磁盘**,方便用户后续二次编辑。
 
@@ -141,38 +117,6 @@ ls -d "/Applications/draw.io.app" 2>/dev/null || mdfind "kMDItemCFBundleIdentifi
 | 错误 | `#ecc4c2`(浅红) |
 | 背景 | `#eaf1e1` |
 
-### PlantUML 主题片段
-
-UML 类图、时序图、用例图、活动图分别使用以下 `skinparam`:
-
-```plantuml
-' 类图
-!theme plain
-skinparam class { BackgroundColor #E6F3FF; BorderColor #0066CC; ArrowColor #0066CC }
-skinparam interface { BackgroundColor #D9EAD3; BorderColor #4CAF50 }
-skinparam abstract { BackgroundColor #FFF2CC; BorderColor #FF9800 }
-
-' 时序图
-skinparam sequence {
-  ActorBackgroundColor #E6F3FF
-  ParticipantBackgroundColor #F5F5F5
-  LifeLineBackgroundColor #FFFFFF
-  ArrowColor #0066CC
-}
-
-' 用例图
-skinparam usecase { BackgroundColor #E6F3FF; BorderColor #0066CC }
-skinparam actor { BackgroundColor #D9EAD3; BorderColor #4CAF50 }
-
-' 活动图
-skinparam activity {
-  BackgroundColor #E6F3FF
-  BorderColor #0066CC
-  DiamondBackgroundColor #FFF2CC
-  DiamondBorderColor #FF9800
-}
-```
-
 ---
 
 ## drawio 格式要点
@@ -191,7 +135,7 @@ drawio MCP 工具(`mcp__drawio__open_drawio_xml`)自带详细语法说明,这里
 | 长(>10 字) | 200-400 × 60-100 |
 | 多行 | 每行额外 +20-30 高度 |
 
-5. **不要手动算 x/y 坐标**:rigid grid 思维容易出错,优先调 `open_drawio_xml` 让其自动处理布局,或调 `open_drawio_mermaid` 用 mermaid 写完直接转
+5. **不要手动算 x/y 坐标**:rigid grid 思维容易出错,优先调 `open_drawio_xml` 让其自动处理布局
 6. **rounded=1**:节点统一加圆角,`fontSize=12`
 
 骨架模板:
@@ -219,27 +163,6 @@ drawio MCP 工具(`mcp__drawio__open_drawio_xml`)自带详细语法说明,这里
 
 ---
 
-## mermaid 格式要点
-
-调 `mcp__drawio__open_drawio_mermaid` 时已有详尽语法指导,这里只强调几条:
-
-- **第一行就定类型**:`flowchart TD` / `sequenceDiagram` / `classDiagram` / `mindmap`
-- **节点 ID 不能含空格、连字符、保留字**(`end`/`class` 不能做 ID),显示文字放 `["..."]` 里
-- **方向**:`TD`/`TB` 自顶向下,`LR` 左到右
-- **节点形状**:`A[方框]`、`B(圆角)`、`C{菱形决策}`、`D((圆形))`、`E[/平行四边形/]`
-- **样式 class**:`classDef ok fill:#caddca,stroke:#333` + `class A,B,C ok` 给节点上色,不要每个节点单独写 style
-
----
-
-## PlantUML 格式要点
-
-- 用标准 `@startuml ... @enduml` 包裹
-- 类图、时序图、用例图遵循 UML 规范,关系符号用对
-- `!theme plain` + 上面的 `skinparam` 片段做配色
-- 输出后明确告诉用户:**没有 MCP 直接渲染工具**,需要在 PlantUML Online / VSCode 插件 / IDEA 插件中查看
-
----
-
 ## 确认门(复杂图 / 要求美观时)
 
 只在以下情况触发,简单图直接动手:
@@ -253,7 +176,6 @@ drawio MCP 工具(`mcp__drawio__open_drawio_xml`)自带详细语法说明,这里
 
 > 我的理解:
 > - **类型**:{流程图 / 架构图 / 时序图 / ...}
-> - **格式**:{drawio / mermaid / plantuml},理由:{...}
 > - **核心元素**:节点 X 个、分 Y 层 / 子系统、关键流程是 Z
 > - **配色方案**:{流程图 / 架构图 / 状态图}配色
 
@@ -268,7 +190,6 @@ AskUserQuestion({
     options: [
       { label: "确认,开始绘制", description: "理解无误" },
       { label: "调整结构", description: "节点/连线需要修改" },
-      { label: "换格式", description: "格式选错了" },
       { label: "换配色", description: "颜色不合适" }
     ]
   }]
@@ -299,8 +220,6 @@ AskUserQuestion({
 
 **格式**
 - [ ] drawio:扩展名 `.drawio`,无 XML 声明,value 是纯文本
-- [ ] mermaid:第一行类型声明,ID 无非法字符
-- [ ] PlantUML:`@startuml`/`@enduml` 配对,主题统一
 
 ---
 

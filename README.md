@@ -10,7 +10,7 @@
 | [`learning`](#learning) | 用 5W1H 六维度（What/Why/Who/When/Where/How）解构一个技术或概念 |
 | [`summary`](#summary) | 抓取链接内容，提炼总结并写入本地知识库 |
 | [`search`](#search) | 多层降级检索，自动应对企业防火墙阻断外网访问的问题 |
-| [`architecture-diagram`](#architecture-diagram) | 专业图表绘制，覆盖 drawio / mermaid / PlantUML 三种格式 |
+| [`architecture-diagram`](#architecture-diagram) | 专业图表绘制，输出 drawio 格式 |
 | [`image-prompt-info`](#image-prompt-info)   | 信息图 AI 文生图 prompt(产 prompt 文件,自己拿去文生图平台出图) |
 | [`image-prompt-cover`](#image-prompt-cover) | 文章封面图 AI 文生图 prompt |
 | [`image-prompt-xhs`](#image-prompt-xhs)     | 小红书图卡 AI 文生图 prompt(多张系列,1-10 张) |
@@ -134,7 +134,7 @@ claude plugins install slib
 **触发条件**：
 
 - "画一个架构图 / 流程图 / 时序图 / 思维导图"
-- "帮我画图"、"用 drawio / mermaid / plantuml 画"
+- "帮我画图"、"用 drawio 画"
 - 描述系统结构、模块依赖、调用链路并希望可视化
 - 提供既有图表想要修改或补充
 
@@ -142,18 +142,13 @@ claude plugins install slib
 
 ```
 用户：画一个电商订单系统的分层架构图
-用户：用 mermaid 画一下用户登录的时序图
+用户：画一下用户登录的时序图
 用户：帮我画一个 RAG 系统的数据流图，要正式一点
 ```
 
-**执行流程**：需求分析 → 格式选择（drawio / mermaid / PlantUML）→ 结构设计 → 应用配色方案 → 调用 `mcp__drawio__open_drawio_xml` 或 `open_drawio_mermaid` 直接打开预览
+**执行流程**：需求分析 → 结构设计 → 应用配色方案 → 调用 `mcp__drawio__open_drawio_xml` 直接打开预览
 
-**格式选择**：
-- **drawio** — 复杂架构图、需要像素级控制、对外演示
-- **mermaid** — 快速原型、Markdown 文档内嵌、版本控制友好
-- **PlantUML** — UML 标准图（类图 / 时序图 / 用例图 / 活动图）
-
-**配色规范**：内置流程图、架构图、状态图三套配色，以及 PlantUML 主题片段。复杂图（节点 > 10 或层级 > 3）或用户要求"画好看"时，会先确认结构与格式再动手。
+**配色规范**：内置流程图、架构图、状态图三套配色。复杂图（节点 > 10 或层级 > 3）或用户要求"画好看"时，会先确认结构再动手。
 
 ---
 

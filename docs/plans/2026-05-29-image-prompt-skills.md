@@ -2120,7 +2120,7 @@ Expected:Claude 识别并准备触发 `slib:image-prompt-xhs`。
 Input:`帮我画一张系统架构图`
 Expected:Claude 优先触发 `slib:architecture-diagram`(向量结构图),**不**触发 `image-prompt-*`。
 
-Input:`帮我用 mermaid 画一个 OAuth 时序图`
+Input:`用 drawio 画一个 OAuth 时序图`
 Expected:同上,architecture-diagram。
 
 如出现混淆触发 → 在 `image-prompt-info` 的 description 加显式排除条款,如 "不用于结构图 / 时序图 / 流程图等向量化图,这些走 architecture-diagram"。

@@ -37,10 +37,10 @@ status: draft
 
 ### 1.3 在 SLib 中的定位
 
-SLib 现有 `slib:architecture-diagram` 负责"结构化、向量化"的图(drawio / mermaid / PlantUML)。本系列 3 个 skill 负责"光栅、AI 生图"路线的 prompt 产出,与 `architecture-diagram` 形成完整互补:
+SLib 现有 `slib:architecture-diagram` 负责"结构化、向量化"的图(drawio)。本系列 3 个 skill 负责"光栅、AI 生图"路线的 prompt 产出,与 `architecture-diagram` 形成完整互补:
 
 ```
-slib:architecture-diagram      ← 结构图(drawio / mermaid / PlantUML),自己出最终图
+slib:architecture-diagram      ← 结构图(drawio),自己出最终图
 slib:image-prompt-info         ← 信息图 AI prompt,用户拿去文生图平台出图
 slib:image-prompt-cover        ← 文章封面 AI prompt
 slib:image-prompt-xhs          ← 小红书图卡 AI prompt
