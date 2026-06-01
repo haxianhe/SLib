@@ -18,6 +18,9 @@ description: SLib 引导文件，在会话开始时注入。列出所有可用 s
 | `slib:summary` | 用户粘贴 URL 要求总结/提炼/保存、说"帮我总结这篇"、"记录到知识库" |
 | `slib:search` | 用户说"搜索/查找/检索 X"、需要获取信息时外网可能被防火墙拦截、WebSearch/WebFetch 调用失败后需降级到内网检索 |
 | `slib:architecture-diagram` | 用户说"画一个架构图/流程图/时序图/思维导图"、"帮我画图"、"用 drawio/mermaid/plantuml 画"、描述系统结构或调用链路想可视化 |
+| `slib:image-prompt-info` | 用户说"画信息图/做信息卡/可视化数据/高密度大图/知识卡片/dataviz/infographic"、提供数据或教程内容并希望出一张视觉化图 |
+| `slib:image-prompt-cover` | 用户说"做文章封面/封面图/banner/cover/配题图"、有文章/标题想配主视觉 |
+| `slib:image-prompt-xhs` | 用户说"做小红书图/出图卡/社交多图/知识小抄/xhs"、想出分张的图卡系列(3 张 / 6 张 / 9 张等) |
 
 ---
 
@@ -41,6 +44,9 @@ Skill({ skill: "slib:learning" })
 Skill({ skill: "slib:summary" })
 Skill({ skill: "slib:search" })
 Skill({ skill: "slib:architecture-diagram" })
+Skill({ skill: "slib:image-prompt-info" })
+Skill({ skill: "slib:image-prompt-cover" })
+Skill({ skill: "slib:image-prompt-xhs" })
 ```
 
 ---
