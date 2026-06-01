@@ -25,11 +25,17 @@ Text rendering:
 - Generous whitespace; do not overlap text with key visual elements
 ```
 
-`{font_hint}` 默认值:
-- style 含 `handmade` / `chalk` / `notes` / `kawaii` / `morandi` → `hand-lettered / handwritten`
-- style 含 `corporate` / `technical` / `ui` / `pixel` → `clean geometric sans-serif`
-- style 含 `aged-academia` / `morandi-journal` → `vintage serif`
-- 其他 → `clean sans-serif`
+`{font_hint}` 按 style 名查:
+
+| 字体感 | 适用 style 名 |
+|---|---|
+| `hand-lettered / handwritten` | `craft-handmade` / `chalkboard` / `kawaii` / `hand-drawn-edu` / `storybook-watercolor` / `morandi-journal` |
+| `vintage serif` | `aged-academia` |
+| `clean geometric sans-serif` | `corporate-memphis` / `technical-schematic` / `ui-wireframe` / `pixel-art` / `pop-laboratory` / `subway-map` / `ikea-manual` |
+| `bold display / posterized` | `bold-graphic` / `cyberpunk-neon` / `retro-pop-grid` / `retro-popup-pop` |
+| `clean sans-serif` | `claymation` / `origami` / `lego-brick` / `knolling` |
+
+Style 命中表里第一个匹配行即用对应字体感;若 style 不在表里(未来扩展),默认 `clean sans-serif`。
 
 ## 通用防御段(Constraints,所有 prompt 都加)
 
@@ -45,7 +51,7 @@ Constraints:
 
 ## 输出 prompt 文件结构
 
-```
+````
 ---
 skill: image-prompt-info
 preset: {预设名 or null}
@@ -77,4 +83,4 @@ source: |
 - 复制上面 Prompt 块整段贴过去
 - 如果平台支持 aspect 参数,单独设 `{aspect}`
 - 不满意 → 回到对话说「换 X 风格」重新出
-```
+````
