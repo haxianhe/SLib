@@ -220,13 +220,26 @@ AskUserQuestion({
 
 #### 生成与预览
 
-1. 图表样式、配色、骨架规范遵循 `architecture-diagram` skill；本 skill 仅负责"识别 + 生成 + 关联占位符"
-2. **优先调 `mcp__drawio__open_drawio_xml`**（详图）或 `mcp__drawio__open_drawio_mermaid`（简图）打开预览
-   - MCP 工具会优先唤起本地 drawio 桌面 app；未安装时自动降级到浏览器（diagrams.net）
+1. **图必须好看,不只是"画出来"**——总结类文章最终是要被反复阅读、收藏甚至分享的,图的质感直接决定知识卡的档次。本 skill 在这步默认按「演示级 / 对外可看」标准产出,而不是草稿质量。
+2. 图表样式、配色、骨架规范**强制遵循** `slib:architecture-diagram` skill 的「确认门 / 美观要求」分支:
+   - **配色统一**:按角色分类,整图主色不超过 4-5 种,背景 / 节点 / 强调三层分明,禁止每节点一种色
+   - **层次清晰**:同层级元素尺寸 / 字号一致,主流程在视觉中心,辅助元素弱化(灰色 / 描边)
+   - **留白充足**:节点间距 ≥ 40px,避免拥挤;长标签换行,不要超出节点边界
+   - **字体规范**:统一字号(标题 / 节点 / 注释三档),中文用无衬线(PingFang SC / Source Han Sans),不混用花体
+   - **风格统一**:同一篇 md 内多张图共用同一套配色与圆角风格,不允许"图 1 是方角扁平、图 2 是圆角拟物"
+   - 不确定时先调用 `slib:architecture-diagram` 让其产出 XML,再回到本 skill 落盘
+3. **优先调 `mcp__drawio__open_drawio_xml`**(详图)或 `mcp__drawio__open_drawio_mermaid`(简图)打开预览
+   - MCP 工具会优先唤起本地 drawio 桌面 app;未安装时自动降级到浏览器(diagrams.net)
    - 用户无需手动选择
-3. **同时落盘**为 `.drawio` 文件，路径与 markdown 同目录：
-   - 单图：`~/knowledge/YYYY-MM-DD-{title}-fig{N}-{slug}.drawio`
-   - 多图按 `fig1`、`fig2`、`fig3` 顺序编号，编号顺序与正文中出现顺序一致
+4. **同时落盘**为 `.drawio` 文件,路径与 markdown 同目录:
+   - 单图:`~/knowledge/YYYY-MM-DD-{title}-fig{N}-{slug}.drawio`
+   - 多图按 `fig1`、`fig2`、`fig3` 顺序编号,编号顺序与正文中出现顺序一致
+5. **自检一遍再交付**:打开预览后,对照下面 checklist 过一遍,任一项不达标就回到上一步重画,**不要把粗糙的图丢给用户**:
+   - [ ] 一眼能看出主流程 / 主结构,不需要逐节点读字
+   - [ ] 配色统一,无"彩虹节点"
+   - [ ] 文字不溢出、不重叠、不被边框切掉
+   - [ ] 同篇多图风格一致(配色、圆角、字号)
+   - [ ] 标题、图例(如有)完整
 
 #### 维护图表索引表（内部使用，供 Step 3 引用）
 
