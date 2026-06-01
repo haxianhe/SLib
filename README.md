@@ -17,6 +17,16 @@
 
 ---
 
+## 📌 新用户须知
+
+第一次用前,先理清两件事,免得期望对不上:
+
+- **三个 `image-prompt-*` skill 只产 prompt 文本,不直接出图**。产出物是 `prompt.md` 文件,需要你自己复制到 Midjourney / 即梦 / 通义万象 / Nano Banana 等任意文生图平台贴出来才能拿到图。SLib 不调任何文生图 API,也不会消耗任何 token 之外的费用。
+- **`architecture-diagram` 是真出图**,通过 drawio MCP 直接打开预览,不要和上面三个混淆。
+- **`search` 的 Layer 4 用到 `agent-browser`,这是可选依赖**。前 3 层(WebSearch / WebFetch / curl)都失败时才会降级到它,装了能突破企业防火墙抓更多页面。不装也能用,只是少一层兜底。安装方式见下方[可选依赖](#可选依赖agent-browser)。
+
+---
+
 ## 安装
 
 **前置依赖**：[Claude Code](https://claude.ai/code)
@@ -27,6 +37,28 @@ claude plugins install slib
 ```
 
 安装完成后**重启 Claude Code** 即可生效。
+
+### 可选依赖:agent-browser
+
+仅 `search` skill 的 Layer 4 兜底使用。前 3 层都失败、或需要带登录态抓页面时才会调用。不装也能用。
+
+```bash
+# macOS
+brew install agent-browser
+agent-browser install     # 完成 Chromium 等运行时初始化
+
+# 跨平台(任意有 Node.js 的环境)
+npm install -g agent-browser
+agent-browser install
+```
+
+验证安装:
+
+```bash
+agent-browser --version
+```
+
+更多用法见 [agent-browser.dev](https://agent-browser.dev/)。
 
 ---
 

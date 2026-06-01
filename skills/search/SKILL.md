@@ -72,6 +72,47 @@ Bash({
 
 利用真实浏览器的 JS 渲染、Cookie 与已有登录态拿到完整页面。通过 Bash 调用 `agent-browser` CLI。
 
+#### 前置检测：是否已安装 agent-browser
+
+进入实际抓取前，先在 Bash 中检查命令是否存在：
+
+```bash
+command -v agent-browser >/dev/null 2>&1 && agent-browser --version
+```
+
+- **已安装**（输出版本号）→ 跳过本节，按下方姿势继续抓取
+- **未安装**（exit code 非 0 或 `command not found`）→ **不要直接判定 Layer 4 失败**，按下方话术引导用户安装
+
+##### 未安装时的引导话术（直接对用户说）
+
+> 前 3 层检索都没拿到足够内容，准备降级到 Layer 4（`agent-browser`）兜底，
+> 但本机检测不到该命令。它是 search skill 的可选依赖，能用真实浏览器突破企业防火墙、
+> 复用本地登录态抓页面。
+>
+> 安装方式：
+>
+> ```bash
+> # macOS
+> brew install agent-browser
+> agent-browser install   # 首次必须跑，完成 Chromium 等运行时初始化
+>
+> # 跨平台（任意有 Node.js 的环境）
+> npm install -g agent-browser
+> agent-browser install
+> ```
+>
+> 装完回复「装好了」我会继续，或回复「跳过」直接进入「全部失败处理」。
+
+##### 用户回复处理
+
+| 用户回复 | 处理 |
+|---|---|
+| 「装好了」/ 确认安装完成 | 再跑一次 `command -v agent-browser && agent-browser --version` 校验。**通过** → 继续走下方 Layer 4 抓取流程;**仍失败** → 把 `which agent-browser` 与 `echo $PATH` 输出贴回用户，请其检查 PATH,或选择跳过 |
+| 「跳过」/ 拒绝安装 | 进入「全部失败处理」,如实列明已尝试的层级,不要再尝试 Layer 4 |
+| 长时间无回复 | 不要催,等下次用户主动消息 |
+
+**注意**：`agent-browser install` 步骤会下载 Chromium，企业内网可能受阻；若用户反馈该步骤失败，不要在 search skill 内尝试修复，告知用户参考 [agent-browser.dev](https://agent-browser.dev/) 自行解决后再回来重试。
+
 #### 公开页面（默认路径）
 
 ```bash
@@ -122,7 +163,7 @@ agent-browser --state ~/.agent-browser/<domain>.json close
 
 #### 失败判断
 
-- `agent-browser` 命令本身不存在或报错（exit code 非 0）
+- `agent-browser` 命令运行时报错(exit code 非 0;**命令缺失场景已在前置检测处理,这里不再判定**)
 - 三种姿势（公开 / 复用 Chrome / state 复用）都拿不到 ≥200 字正文
 - 用户拒绝在弹窗中完成登录
 
