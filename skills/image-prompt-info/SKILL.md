@@ -24,7 +24,7 @@ description: |
 | 预设 | 看起来像 | 用在哪 | 预览 |
 |---|---|---|---|
 | **知识卡** | 米黄牛皮纸底 + 手绘格子分区 + 马卡龙色块(粉/蓝/绿/桃)+ 黑色手写体标题 + 简笔图标 | 给小学生讲分数的概念入门、5 分钟看懂 OAuth | ![](https://github.com/JimLiu/baoyu-skills/raw/main/screenshots/infographic-styles/craft-handmade.webp) |
-| **复古高密度** | 1970s 波普海报风,粗黑描边 + 番茄红/芥末黄/孔雀蓝大色块,Swiss 栅格,长图竖版 | 一图讲完"15 个 Git 高频命令"、Vim 速查表 | ![](https://github.com/JimLiu/baoyu-skills/raw/main/screenshots/infographic-layouts/dense-modules.webp) |
+| **复古高密度** | 1970s 波普海报风,粗黑描边 + 番茄红/芥末黄/孔雀蓝大色块,Swiss 栅格,长图竖版 | 一图讲完"15 个 Git 高频命令"、Vim 速查表 | —(baoyu 无 dense-modules 截图) |
 | **流程教程** | 宜家说明书风,纯黑线稿无填色,数字步骤圈 + 极简箭头 + 几何小人 | 手把手装显卡、配置家庭路由器 | ![](https://github.com/JimLiu/baoyu-skills/raw/main/screenshots/infographic-styles/ikea-manual.webp) |
 | **数据看板** | 公司年报风,白底网格 + 折线/柱状图 + 大数字 + 扁平 icon + 莫兰迪冷色调 | 季度销售看板、A/B 测试结果汇报 | ![](https://github.com/JimLiu/baoyu-skills/raw/main/screenshots/infographic-styles/corporate-memphis.webp) |
 | **赛博朋克** | 紫黑底 + 霓虹粉绿发光线条 + 故障字效 + 电路纹 + 全息感 | AI 工具新品发布封面、黑客松宣传 | ![](https://github.com/JimLiu/baoyu-skills/raw/main/screenshots/infographic-styles/cyberpunk-neon.webp) |
