@@ -2353,3 +2353,21 @@ git add docs/plans/2026-05-29-image-prompt-skills.md
 git commit -m "docs(plan): close out image-prompt skills release with final validation"
 git push origin main
 ```
+
+---
+
+## Validation Log
+
+### Task 6: image-prompt-info 端到端验证
+
+> 此节由 controller 手工执行后填入。Subagent 仅负责骨架。
+
+3 个测试主题 + 文生图平台贴 prompt 验证出图质量:
+
+| 主题 | 推荐预设 | 推荐命中 | 文件落盘 | 文生图平台 | 出图质量(1-5) | 备注 |
+|---|---|---|---|---|---|---|
+| 路由器配置教程 | 流程教程 | □ | □ | (待填) | (待填) | (待填) |
+| Q1 季度数据 | 数据看板 | □ | □ | (待填) | (待填) | (待填) |
+| 7 个看不见的习惯 | 冰山揭示 | □ | □ | (待填) | (待填) | (待填) |
+
+通过标准:推荐 + 落盘 = ✓,出图质量 ≥ 3 分。
