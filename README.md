@@ -11,6 +11,9 @@
 | [`summary`](#summary) | 抓取链接内容，提炼总结并写入本地知识库 |
 | [`search`](#search) | 多层降级检索，自动应对企业防火墙阻断外网访问的问题 |
 | [`architecture-diagram`](#architecture-diagram) | 专业图表绘制，覆盖 drawio / mermaid / PlantUML 三种格式 |
+| [`image-prompt-info`](#image-prompt-info)   | 信息图 AI 文生图 prompt(产 prompt 文件,自己拿去文生图平台出图) |
+| [`image-prompt-cover`](#image-prompt-cover) | 文章封面图 AI 文生图 prompt |
+| [`image-prompt-xhs`](#image-prompt-xhs)     | 小红书图卡 AI 文生图 prompt(多张系列,1-10 张) |
 
 ---
 
@@ -154,6 +157,110 @@ claude plugins install slib
 
 ---
 
+### image-prompt-info
+
+**定位**:把数据 / 教程 / 概念组织成视觉密度高的一张信息图,产出可直接复制的文生图 prompt 文件。**不调任何后端 API**。
+
+**触发条件**:
+
+- "画信息图 / 做信息卡 / 可视化数据"
+- "高密度大图 / 知识卡片 / dataviz / infographic"
+- 提供数据或教程内容并希望出一张视觉化图
+
+**用法示例**:
+
+```
+用户:帮我做一个信息图,讲 5 个 Git 高频命令
+用户:把 Q1 季度数据做成一张可视化图
+```
+
+**第 1 层精选预设(8 个)**:
+
+| 预设 | 一句话 |
+|---|---|
+| 知识卡 | 米黄牛皮纸 + 手绘 + 马卡龙色块,亲和入门 |
+| 复古高密度 | 1970s 波普 + Swiss 栅格,长图速查 |
+| 流程教程 | 宜家说明书风,纯线稿步骤 |
+| 数据看板 | 公司年报风,扁平矢量 + 数字大 |
+| 赛博朋克 | 紫黑底 + 霓虹粉绿,AI 风 |
+| 黑板手写 | 深绿黑板 + 粉笔字,课堂感 |
+| A vs B 对比 | 左右两栏强对比 |
+| 冰山揭示 | 上 1/8 表象 + 下 7/8 本质 |
+
+**输出位置**:`~/knowledge/image-prompts/{date}-{slug}/prompt.md`
+
+**完整 22 种 style × 21 种 layout × 3 种 palette** 见 `skills/image-prompt-info/SKILL.md` 第 2 节。
+
+---
+
+### image-prompt-cover
+
+**定位**:给文章 / 博客 / Newsletter / 视频缩略图配主视觉,产出可直接复制的文生图 prompt 文件。**不调任何后端 API**。
+
+**触发条件**:
+
+- "做文章封面 / 封面图 / banner / cover / 配题图"
+- 有文章 / 标题想配主视觉
+
+**用法示例**:
+
+```
+用户:给这篇讲 CAP 定理的文章配个封面
+用户:帮我做一个 Newsletter 头条 banner
+```
+
+**第 1 层精选预设(6 个)**:
+
+| 预设 | 一句话 |
+|---|---|
+| 极客蓝图 | 深蓝纸底 + 白色细工程线,科技严谨 |
+| 温暖手绘 | 暖米黄 + 手绘抖动线 + 简笔人物 |
+| 高对比海报 | 浓黑/酒红/芒果黄 + 厚描边 + 大字标题 |
+| 极简文字 | 白底,巨大无衬线标题居中,留白 70% |
+| 暗色氛围 | 深紫黑底 + 渐变光晕 + 玻璃质感卡片 |
+| 油画肖像 | 厚涂笔触 + 暖光 + 人物剪影 |
+
+**输出位置**:`~/knowledge/image-prompts/{date}-{slug}/prompt.md`
+
+**完整 6 type × 11 palette × 7 rendering** 见 `skills/image-prompt-cover/SKILL.md` 第 2 节。
+
+> ⚠️ baoyu-cover-image 仓库未提供截图,预览暂空白。
+
+---
+
+### image-prompt-xhs
+
+**定位**:把内容拆成 1-10 张图卡系列(竖版 3:4),适合小红书 / 公众号头条九宫格 / IG 故事。每张产出独立 prompt 文件。**不调任何后端 API**。
+
+**触发条件**:
+
+- "做小红书图 / 出图卡 / 社交多图 / xhs / 知识小抄"
+- 想出分张的图卡系列(3 张 / 6 张 / 9 张等)
+
+**用法示例**:
+
+```
+用户:做一组讲早睡早起的 6 张小红书图卡
+用户:把这篇心得拆成 9 张图,九宫格预览
+```
+
+**第 1 层精选预设(6 个)**:
+
+| 预设 | 一句话 |
+|---|---|
+| 可爱知识卡 | 米奶油底 + 圆角卡 + 樱花粉/薄荷绿 + Q 版小人 |
+| 清新生活流 | 莫兰迪绿 + 极细线 + 大面积留白 |
+| 暖光叙事 | 暖橙 + 蜜桃,胶片颗粒感 + 居家光晕 |
+| 干货知识小抄 | 粉底 + 黑色粗框 + 序号大字 + 密排短句 |
+| 故事封面 | 1 大主图 + 顶部短金句,留白 60% |
+| 前后对比 | 上下/左右两半,左灰右彩 |
+
+**输出位置**:`~/knowledge/image-prompts/{date}-{slug}/prompts/01-{slug}.md` ... `NN-{slug}.md`(多张)
+
+**默认 6 张**,可调 1/3/6/9。**完整 12 style × 6 layout × 3 palette** 见 `skills/image-prompt-xhs/SKILL.md` 第 2 节。
+
+---
+
 ## 目录结构
 
 ```
@@ -172,7 +279,10 @@ SLib/
 │   ├── learning/           # 技术学习 skill
 │   ├── summary/            # 文章总结 skill
 │   ├── search/             # 多层降级检索 skill
-│   └── architecture-diagram/  # 专业图表绘制 skill
+│   ├── architecture-diagram/  # 专业图表绘制 skill
+│   ├── image-prompt-info/      # 信息图 AI prompt skill
+│   ├── image-prompt-cover/     # 封面图 AI prompt skill
+│   └── image-prompt-xhs/       # 小红书图卡 AI prompt skill
 └── package.json
 ```
 
