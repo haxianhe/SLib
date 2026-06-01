@@ -2371,3 +2371,23 @@ git push origin main
 | 7 个看不见的习惯 | 冰山揭示 | □ | □ | (待填) | (待填) | (待填) |
 
 通过标准:推荐 + 落盘 = ✓,出图质量 ≥ 3 分。
+
+### Task 10: 最终验收(subagent 自动检查部分)
+
+| 检查项 | 结果 |
+|---|---|
+| 全量 commit 干净 | ✓ working tree clean |
+| 16+ 新 commit 完整 | ✓ 17 commits present |
+| TODO 残留扫描 | ✓ empty |
+| references source 注释完整 | ✓ all 87 ref files have source headers |
+| 无 stray files | ✓ empty |
+| 无禁用描述词 | ✓ empty |
+| 无 Alibaba 内部引用 | ✓ empty |
+| 分支 + 远端配置 | ✓ feature/image-prompt-skills → git@github.com:haxianhe/SLib.git |
+
+人工待办(controller):
+- [ ] git push origin feature/image-prompt-skills
+- [ ] 创建 PR 到 main(或直接 merge)
+- [ ] 新 Claude Code session 验证 3 个 skill 可触发
+- [ ] 跑 Task 6 / 7b 端到端验证(贴文生图平台看出图)
+- [ ] 跑 Task 9 边界 smoke test(架构图意图仍走 architecture-diagram)
