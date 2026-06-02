@@ -47,9 +47,16 @@ description: |
 
 不要从代码开始编辑——先想清楚再动手。
 
-### Step 3：样式应用
+### Step 3：样式应用(美观优先)
 
-应用配色方案(见下文 **配色规范** 章节)，统一字体、圆角、边距。**禁止每个节点用不同色**，按角色分类配色。
+图表美不美观,决定读者愿不愿意看下去。**美观四原则**(必须全部满足):
+
+1. **对齐与网格** — 同层 / 同组节点使用相同 x 或 y 坐标;gridSize=10,所有坐标对齐到 10 的倍数。视觉错乱多半源于"差几像素"
+2. **节点间距足够** — 水平相邻 x 间距 ≥ 80,垂直相邻 y 间距 ≥ 60,分组之间留 40+ 边距。**给连线留出绕行的路**,挤在一起必然出现连线穿节点
+3. **配色按角色统一** — 见下文 **配色规范**。**禁止每个节点用不同色**,同类节点同色;整图主色 ≤ 4-5 种
+4. **视觉层次** — 标题 / 分组用 `fontSize=14;fontStyle=1`(加粗)和更深填色 / 阴影(`shadow=1`);主路径连线 `strokeWidth=2`,辅助 / 弱关系 `strokeWidth=1;dashed=1`
+
+字体统一 `fontSize=12`,节点统一 `rounded=1`。**不混用直角和圆角**。
 
 ### Step 4：输出/打开
 
@@ -119,6 +126,70 @@ ls -d "/Applications/draw.io.app" 2>/dev/null || mdfind "kMDItemCFBundleIdentifi
 
 ---
 
+## 连线规范(连线不得覆盖图形)
+
+drawio 默认直线在节点密集时极易穿过其它节点,**这是图表"显得乱"的头号原因**。所有连线必须遵守:
+
+### 1. 默认走正交路由
+
+所有 edge 的 style **必加**:
+
+```
+edgeStyle=orthogonalEdgeStyle;rounded=0;jettySize=auto;
+```
+
+- `orthogonalEdgeStyle`:连线只走横平竖直,drawio 内置避障会自动绕开节点
+- `jettySize=auto`:在节点边缘预留一段直角空隙,避免连线"贴脸"
+
+### 2. 显式锁定连接点(关键)
+
+只设 `source` / `target` 时,drawio 会从节点中心随机选边,连线常常穿过节点中心。必须用 `exitX/exitY` 和 `entryX/entryY` 把连接点钉在边上:
+
+| 方位 | exit/entry 参数 |
+|------|----------------|
+| 右侧出 | `exitX=1;exitY=0.5;exitDx=0;exitDy=0;` |
+| 左侧入 | `entryX=0;entryY=0.5;entryDx=0;entryDy=0;` |
+| 底部出 | `exitX=0.5;exitY=1;exitDx=0;exitDy=0;` |
+| 顶部入 | `entryX=0.5;entryY=0;entryDx=0;entryDy=0;` |
+
+经验法则:**水平布局用左右连(0.5 中点),垂直布局用上下连**,绝不让连线从节点对角穿出。
+
+### 3. 交叉连线开启 jumpStyle
+
+无法避免的交叉处加"过桥"弧线,大幅提升可读性。edge style 追加:
+
+```
+jumpStyle=arc;jumpSize=10;
+```
+
+### 4. 节点间距留足绕行空间
+
+- 水平相邻节点 x 间距 ≥ 80
+- 垂直相邻节点 y 间距 ≥ 60
+- 分组(swimlane / container)边距 ≥ 40
+- 节点周围 30px 内不应有其它节点 / 连线
+
+间距挤了就该改布局,不要靠 waypoint 硬绕。
+
+### 5. 必要时手工加 waypoints
+
+自动路由仍穿过节点的边缘情况,在 `mxGeometry` 内显式拐点:
+
+```xml
+<mxGeometry relative="1" as="geometry">
+  <Array as="points">
+    <mxPoint x="400" y="200" />
+    <mxPoint x="400" y="350" />
+  </Array>
+</mxGeometry>
+```
+
+### 6. 节点过密就拆分子图
+
+节点 > 20、或交叉超过 5 条:不要硬画,优先**拆分子图 / 用 swimlane 圈分组**,从源头减少跨域连线。挤进一张图反而看不懂。
+
+---
+
 ## drawio 格式要点
 
 drawio MCP 工具(`mcp__drawio__open_drawio_xml`)自带详细语法说明,这里只列易踩坑点:
@@ -137,8 +208,9 @@ drawio MCP 工具(`mcp__drawio__open_drawio_xml`)自带详细语法说明,这里
 
 5. **不要手动算 x/y 坐标**:rigid grid 思维容易出错,优先调 `open_drawio_xml` 让其自动处理布局
 6. **rounded=1**:节点统一加圆角,`fontSize=12`
+7. **连线必带 orthogonal + exit/entry**:见上文 **连线规范**
 
-骨架模板:
+骨架模板(已内置正交路由 + 连接点锁定 + jumpStyle):
 
 ```xml
 <mxfile host="app.diagrams.net" version="24.7.17">
@@ -147,12 +219,23 @@ drawio MCP 工具(`mcp__drawio__open_drawio_xml`)自带详细语法说明,这里
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <!-- 节点 -->
-        <mxCell id="n1" value="开始" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#caddca;strokeColor=#000000;fontSize=12;" vertex="1" parent="1">
+
+        <!-- 节点:统一圆角 + 配色按角色分类 + 阴影增强层次 -->
+        <mxCell id="n1" value="开始"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#caddca;strokeColor=#000000;fontSize=12;shadow=1;"
+          vertex="1" parent="1">
           <mxGeometry x="100" y="100" width="100" height="40" as="geometry" />
         </mxCell>
-        <!-- 连线 -->
-        <mxCell id="e1" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="n1" target="n2">
+        <mxCell id="n2" value="处理"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae9fd;strokeColor=#000000;fontSize=12;shadow=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="260" y="100" width="100" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- 连线:正交路由 + 锁定右出/左入 + jumpStyle 处理交叉 -->
+        <mxCell id="e1"
+          style="edgeStyle=orthogonalEdgeStyle;rounded=0;jettySize=auto;jumpStyle=arc;jumpSize=10;endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
+          edge="1" parent="1" source="n1" target="n2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
@@ -212,11 +295,21 @@ AskUserQuestion({
 - [ ] 层级清晰,主干一眼看出
 - [ ] 术语统一(同一概念别一会儿叫"用户"一会儿叫"客户")
 
-**视觉**
-- [ ] 配色按角色分类,不超过 4-5 种主色
-- [ ] 字体大小一致(drawio 用 `fontSize=12`)
+**视觉(美观)**
+- [ ] 配色按角色分类,不超过 4-5 种主色,同类节点同色
+- [ ] 字体大小一致(`fontSize=12`),标题 / 分组用 14 加粗
+- [ ] 节点统一圆角(`rounded=1`),不混用直角圆角
 - [ ] 节点尺寸放得下文字,无溢出
-- [ ] 元素间距合理,不挤不空
+- [ ] 同层节点 x 或 y 坐标对齐(到 gridSize=10)
+- [ ] 节点间距:水平 ≥ 80,垂直 ≥ 60,分组边距 ≥ 40
+- [ ] 标题 / 分组有视觉层次(加粗 / 阴影 / 深色填充)
+
+**连线(不得覆盖图形)**
+- [ ] 所有 edge style 包含 `edgeStyle=orthogonalEdgeStyle;jettySize=auto`
+- [ ] 起止用 `exitX/exitY` + `entryX/entryY` 锁定到节点边
+- [ ] 交叉处加 `jumpStyle=arc;jumpSize=10`
+- [ ] 主路径 `strokeWidth=2`,辅助 / 弱关系 `dashed=1`
+- [ ] **逐条检查没有连线穿过任何节点矩形**
 
 **格式**
 - [ ] drawio:扩展名 `.drawio`,无 XML 声明,value 是纯文本
@@ -224,6 +317,12 @@ AskUserQuestion({
 ---
 
 ## 写在最后
+
+**美观 = 克制 + 对齐 + 留白**。三者缺一不可:
+
+- **克制** — 主色 ≤ 5 种,字号 ≤ 2 档,形状 ≤ 3 种。每多一种"花样",信息密度就降一截
+- **对齐** — 同层节点坐标对齐到 gridSize,差 2px 都会让图"歪"
+- **留白** — 节点间距、分组边距、画布边距都要足。**挤出来的图不可能美观,也必然出现连线穿节点**
 
 **始终以"读者能否一眼看懂"为最高标准**——配色再炫、节点再多,读者看不懂就是失败。
 
