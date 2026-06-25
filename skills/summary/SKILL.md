@@ -34,7 +34,7 @@ description: |
 | 正文内容 | **必须由用户/调用方提供**，无内容则无法继续 |
 | 原始来源（URL / 出处） | 可空，作为信息卡 `来源` 字段；空缺时省略该字段 |
 | 阅读重点/关注角度 | 默认"全面提炼"，在摘要中标注 |
-| 保存路径 | 默认 `~/knowledge/`，可在确认时修改 |
+| 保存路径 | 默认 `~/KnowledgeDB/raw/`，可在确认时修改 |
 
 #### 理解摘要模板
 
@@ -43,7 +43,7 @@ description: |
 > 我的理解：
 > - 来源：**[URL / 出处 / 无]**
 > - 关注角度：**[全面提炼 / 用户指定角度]**
-> - 保存路径：**`~/knowledge/YYYY-MM-DD-{标题}.md`**
+> - 保存路径：**`~/KnowledgeDB/raw/YYYY-MM-DD-{标题}.md`**
 
 ```
 AskUserQuestion({
@@ -232,7 +232,7 @@ AskUserQuestion({
    - MCP 工具会优先唤起本地 drawio 桌面 app;未安装时自动降级到浏览器(diagrams.net)
    - 用户无需手动选择
 4. **同时落盘**为 `.drawio` 文件,路径与 markdown 同目录:
-   - 单图:`~/knowledge/YYYY-MM-DD-{title}-fig{N}-{slug}.drawio`
+   - 单图:`~/KnowledgeDB/raw/YYYY-MM-DD-{title}-fig{N}-{slug}.drawio`
    - 多图按 `fig1`、`fig2`、`fig3` 顺序编号,编号顺序与正文中出现顺序一致
 5. **自检一遍再交付**:打开预览后,对照下面 checklist 过一遍,任一项不达标就回到上一步重画,**不要把粗糙的图丢给用户**:
    - [ ] 一眼能看出主流程 / 主结构,不需要逐节点读字
@@ -247,17 +247,17 @@ AskUserQuestion({
 
 | 图编号 | drawio 文件路径 | 图表类型 | 一句话说明 | 对应正文章节 |
 |-------|----------------|---------|-----------|------------|
-| fig1 | `~/knowledge/...fig1-arch.drawio` | 架构图 | 三层系统结构 | `## 🏗️ 关键架构决策` |
+| fig1 | `~/KnowledgeDB/raw/...fig1-arch.drawio` | 架构图 | 三层系统结构 | `## 🏗️ 关键架构决策` |
 | fig2 | ... | 时序图 | 调用链路 | `## 🔧 核心 API / 命令` |
 
 ---
 
 ### Step 2：写入本地知识库
 
-**文件路径**：`~/knowledge/YYYY-MM-DD-{slugified-title}.md`
+**文件路径**：`~/KnowledgeDB/raw/YYYY-MM-DD-{slugified-title}.md`
 
 - 标题 slug 规则：取文章标题，空格替换为 `-`，去除特殊字符，全小写（中文标题保留原文）
-- 由其他 skill 调用时建议：`~/knowledge/YYYY-MM-DD-{来源skill}-{主题}.md`（如 `learning-Rust`）
+- 由其他 skill 调用时建议：`~/KnowledgeDB/raw/YYYY-MM-DD-{来源skill}-{主题}.md`（如 `learning-Rust`）
 
 **文件格式**（**禁止使用 YAML frontmatter**，统一用信息卡）：
 
@@ -316,7 +316,7 @@ AskUserQuestion({
 > 📌 **贴图指引**（请按以下顺序操作）：
 >
 > 1. 在已打开的 drawio 编辑器中检查 / 微调每张图
-> 2. 在 drawio 中通过 `File → Export As → PNG`（或 SVG）导出图片，建议保存到 `~/knowledge/images/{md 文件名}/figN.png`
+> 2. 在 drawio 中通过 `File → Export As → PNG`（或 SVG）导出图片，建议保存到 `~/KnowledgeDB/raw/images/{md 文件名}/figN.png`
 > 3. 打开 md 文件，按下表替换占位符：
 >
 > | 图编号 | md 中占位符位置（章节） | 替换为 |
