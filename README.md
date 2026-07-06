@@ -1,6 +1,6 @@
 # SLib
 
-个人 Claude Code Skill 库，提供开箱即用的工作流 skill，安装后自动注入到 Claude Code 会话中。
+个人 Skill 库，提供开箱即用的工作流 skill，支持 Claude Code 和 Codex 安装，安装后自动注入到会话中。
 
 ## 包含 Skill
 
@@ -30,6 +30,8 @@
 
 ## 安装
 
+### Claude Code
+
 **前置依赖**：[Claude Code](https://claude.ai/code)
 
 ```bash
@@ -38,6 +40,16 @@ claude plugins install slib
 ```
 
 安装完成后**重启 Claude Code** 即可生效。
+
+### Codex
+
+**前置依赖**：[Codex CLI](https://github.com/openai/codex)
+
+```bash
+codex install github:haxianhe/SLib
+```
+
+安装完成后重启 Codex 即可生效。
 
 ### 可选依赖:agent-browser
 
