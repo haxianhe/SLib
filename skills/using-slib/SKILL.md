@@ -21,6 +21,7 @@ description: SLib 引导文件，在会话开始时注入。列出所有可用 s
 | `slib:image-prompt-info` | 用户说"画信息图/做信息卡/可视化数据/高密度大图/知识卡片/dataviz/infographic"、提供数据或教程内容并希望出一张视觉化图 |
 | `slib:image-prompt-cover` | 用户说"做文章封面/封面图/banner/cover/配题图"、有文章/标题想配主视觉 |
 | `slib:image-prompt-xhs` | 用户说"做小红书图/出图卡/社交多图/知识小抄/xhs"、想出分张的图卡系列(3 张 / 6 张 / 9 张等) |
+| `slib:code-investigation` | 用户说"检查/梳理/调查 X 实现"、"X 代码在哪"、"X 逻辑全景"、"摸底 X 模块"、想全面了解某功能在代码库中的分布和流转 |
 
 ---
 
@@ -47,6 +48,7 @@ Skill({ skill: "slib:architecture-diagram" })
 Skill({ skill: "slib:image-prompt-info" })
 Skill({ skill: "slib:image-prompt-cover" })
 Skill({ skill: "slib:image-prompt-xhs" })
+Skill({ skill: "slib:code-investigation" })
 ```
 
 ---
