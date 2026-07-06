@@ -11,6 +11,7 @@
 | [`summary`](#summary) | 抓取链接内容，提炼总结并写入本地知识库 |
 | [`search`](#search) | 多层降级检索，自动应对企业防火墙阻断外网访问的问题 |
 | [`architecture-diagram`](#architecture-diagram) | 专业图表绘制，输出 drawio 格式 |
+| [`code-investigation`](#code-investigation) | 代码实现全景调查，输出结构化调查报告 |
 | [`image-prompt-info`](#image-prompt-info)   | 信息图 AI 文生图 prompt(产 prompt 文件,自己拿去文生图平台出图) |
 | [`image-prompt-cover`](#image-prompt-cover) | 文章封面图 AI 文生图 prompt |
 | [`image-prompt-xhs`](#image-prompt-xhs)     | 小红书图卡 AI 文生图 prompt(多张系列,1-10 张) |
@@ -184,6 +185,29 @@ agent-browser --version
 
 ---
 
+### code-investigation
+
+**定位**：对项目中某个功能/模块/特性进行全面扫描，输出结构化调查报告（核心类表格 + 调用流程 + 配置项 + 设计要点 + 边界区分）。一次 grep 只能告诉你"在哪出现"，全景调查让你看清一个功能的全貌。
+
+**触发条件**：
+
+- "帮我检查 X 相关实现"、"X 功能的代码在哪"、"梳理 X 逻辑"
+- "调查 / 扫描 / 摸底 X 模块"、"X 代码分布在哪些文件"
+- "帮我理清 X 的调用链路"、"X 涉及哪些类"
+- 想全面了解某个功能在代码库中的分布、流转、配置和设计决策
+
+**用法示例**：
+
+```
+用户：帮我梳理一下 Token 校验的完整逻辑
+用户：调查一下订单状态机的实现全景
+用户：看看缓存失效策略代码分布在哪些文件
+```
+
+**执行流程**：广度搜索（多维度 grep/find）→ 分类归档 → 深度阅读 → 产出结构化报告
+
+---
+
 ### image-prompt-info
 
 **定位**:把数据 / 教程 / 概念组织成视觉密度高的一张信息图,产出可直接复制的文生图 prompt 文件。**不调任何后端 API**。
@@ -307,6 +331,7 @@ SLib/
 │   ├── summary/            # 文章总结 skill
 │   ├── search/             # 多层降级检索 skill
 │   ├── architecture-diagram/  # 专业图表绘制 skill
+│   ├── code-investigation/    # 代码实现全景调查 skill
 │   ├── image-prompt-info/      # 信息图 AI prompt skill
 │   ├── image-prompt-cover/     # 封面图 AI prompt skill
 │   └── image-prompt-xhs/       # 小红书图卡 AI prompt skill
