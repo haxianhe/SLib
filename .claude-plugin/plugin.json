@@ -1,7 +1,7 @@
 {
   "name": "slib",
   "version": "1.1.2",
-  "description": "个人知识工具库，包含竞品分析（afeaturemerge）、技术学习（learning）、链接总结入库（summary）等 skill。",
+  "description": "个人知识工具库，包含链接总结入库（summary）、多层检索（search）、专业图表绘制（architecture-diagram）等 skill。",
   "author": {
     "name": "haxianhe"
   }

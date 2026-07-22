@@ -1942,8 +1942,6 @@ SKILL.md 5 节填满;references 覆盖 12 style + 6 layout + 3 palette。
 ```markdown
 | Skill | 触发条件 |
 |-------|---------|
-| `slib:afeaturemerge` | 用户说...
-| `slib:learning` | 用户说...
 | `slib:summary` | 用户粘贴 URL...
 | `slib:search` | 用户说"搜索/查找/检索 X"...
 | `slib:architecture-diagram` | 用户说"画一个架构图..."...
@@ -1962,8 +1960,6 @@ SKILL.md 5 节填满;references 覆盖 12 style + 6 layout + 3 palette。
 找到这段代码块:
 
 ```
-Skill({ skill: "slib:afeaturemerge" })
-Skill({ skill: "slib:learning" })
 Skill({ skill: "slib:summary" })
 Skill({ skill: "slib:search" })
 Skill({ skill: "slib:architecture-diagram" })
@@ -1994,8 +1990,6 @@ Expected:`6`(3 行表格 + 3 行调用块)。
 ```markdown
 | Skill | 适用场景 |
 |-------|---------|
-| [`afeaturemerge`](#afeaturemerge) | ...
-| [`learning`](#learning) | ...
 | [`summary`](#summary) | ...
 | [`search`](#search) | ...
 | [`architecture-diagram`](#architecture-diagram) | ...
@@ -2074,8 +2068,6 @@ SLib/
 │   └── run-hook.cmd
 ├── skills/
 │   ├── using-slib/
-│   ├── afeaturemerge/
-│   ├── learning/
 │   ├── summary/
 │   ├── search/
 │   └── architecture-diagram/

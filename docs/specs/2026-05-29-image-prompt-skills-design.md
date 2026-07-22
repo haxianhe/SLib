@@ -151,8 +151,6 @@ slib:image-prompt-xhs          ← 小红书图卡 AI prompt
 SLib/
 ├── skills/
 │   ├── using-slib/
-│   ├── afeaturemerge/
-│   ├── learning/
 │   ├── summary/
 │   ├── search/
 │   ├── architecture-diagram/

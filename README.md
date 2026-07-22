@@ -6,8 +6,6 @@
 
 | Skill | 适用场景 |
 |-------|---------|
-| [`afeaturemerge`](#afeaturemerge) | 参考竞品 / 开源项目的功能，规划在自己系统中的实现方案 |
-| [`learning`](#learning) | 用 5W1H 六维度（What/Why/Who/When/Where/How）解构一个技术或概念 |
 | [`summary`](#summary) | 抓取链接内容，提炼总结并写入本地知识库 |
 | [`search`](#search) | 多层降级检索，自动应对企业防火墙阻断外网访问的问题 |
 | [`architecture-diagram`](#architecture-diagram) | 专业图表绘制，输出 drawio 格式 |
@@ -46,7 +44,11 @@ claude plugins install slib
 **前置依赖**：[Codex CLI](https://github.com/openai/codex)
 
 ```bash
-codex install github:haxianhe/SLib
+# 添加 marketplace 源
+codex plugin marketplace add haxianhe/SLib
+
+# 安装插件
+codex plugin add slib@SLib
 ```
 
 安装完成后重启 Codex 即可生效。
@@ -76,60 +78,6 @@ agent-browser --version
 ---
 
 ## Skill 说明
-
-### afeaturemerge
-
-**触发条件**：
-
-- "参考 X 系统的 Y 功能，在我们系统里实现"
-- "调研 X 是怎么做 Y 的，给出实现方案"
-- "我想加类似 X 的功能"
-- 提到"对标"、"借鉴"、"参考"某个系统并希望落地
-
-**用法示例**：
-
-```
-用户：参考 Cursor 的 Rules for AI 功能，在我们的 AI 管理平台里实现类似的 Prompt 模板管理
-用户：调研 LangGraph 的 checkpoint 机制，给出我们对话服务的状态持久化方案
-```
-
-**执行流程**：收集信息 → 确认理解 → 调用 `search`（多层降级）调研参考系统 → 分析自身现状 → 产出需求文档与技术方案
-
----
-
-### learning
-
-**定位**：用 **5W1H 六维度**（What / Why / Who / When / Where / How）把一个技术或概念彻底拆开看清楚——不是学习路径规划，而是概念深度解构。
-
-**触发条件**：
-
-- "我想理解 X"、"5W1H 解读 X"、"帮我把 X 讲清楚"
-- "X 是什么 / 为什么有 X / X 怎么用" 并希望得到系统性回答
-- 粘贴一篇文章/文档 URL，希望用 5W1H 维度提炼
-- 想全面把握一个陌生概念的本质、动机、边界与机制
-
-**用法示例**：
-
-```
-用户：5W1H 解读 CRDT
-用户：帮我把 Raft 协议讲清楚，我了解 Paxos
-用户：https://example.com/event-sourcing 用 5W1H 提炼一下
-```
-
-**六个维度**：
-
-| 维度 | 回答什么 |
-|---|---|
-| 🎯 What | 本质、一句话定义、关键术语 |
-| 💡 Why | 原本怎么做、为什么不够、它怎么破局 |
-| 👥 Who | 起源、采用者、社区与生态、谁不该用 |
-| 📅 When | 历史脉络、什么时候该选、什么时候不该选 |
-| 🗺️ Where | 部署位置、适用场景、边界、与相邻方案对比 |
-| 🔧 How | 核心机制、最短上手路径、常见坑、进阶方向 |
-
-**执行流程**：识别输入（概念名 / URL）→ URL 时先抓取 → 摘要确认 → 6 维解构 → 询问是否落盘 → 选"保存"时调用 `summary` 内联模式写入 `~/knowledge/`
-
----
 
 ### summary
 
@@ -338,8 +286,6 @@ SLib/
 │   └── run-hook.cmd        # 跨平台 hook 入口
 ├── skills/
 │   ├── using-slib/         # 会话引导文件（自动注入）
-│   ├── afeaturemerge/      # 竞品功能分析 skill
-│   ├── learning/           # 技术学习 skill
 │   ├── summary/            # 文章总结 skill
 │   ├── search/             # 多层降级检索 skill
 │   ├── architecture-diagram/  # 专业图表绘制 skill

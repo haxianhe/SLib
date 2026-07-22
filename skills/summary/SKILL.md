@@ -257,7 +257,7 @@ AskUserQuestion({
 **文件路径**：`~/KnowledgeDB/raw/YYYY-MM-DD-{slugified-title}.md`
 
 - 标题 slug 规则：取文章标题，空格替换为 `-`，去除特殊字符，全小写（中文标题保留原文）
-- 由其他 skill 调用时建议：`~/KnowledgeDB/raw/YYYY-MM-DD-{来源skill}-{主题}.md`（如 `learning-Rust`）
+- 由其他 skill 调用时建议：`~/KnowledgeDB/raw/YYYY-MM-DD-{来源skill}-{主题}.md`
 
 **文件格式**（**禁止使用 YAML frontmatter**，统一用信息卡）：
 
