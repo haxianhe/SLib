@@ -1,0 +1,6 @@
+interface:
+  display_name: "Knowledge Sync"
+  short_description: "确认目标与内容后同步 Markdown 到外部文档"
+  default_prompt: "Use $knowledge-sync to preview and sync this Markdown file to my selected document service."
+policy:
+  allow_implicit_invocation: false

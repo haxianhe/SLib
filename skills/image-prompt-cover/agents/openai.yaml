@@ -1,0 +1,6 @@
+interface:
+  display_name: "Cover Image Prompt"
+  short_description: "为文章与视频封面生成可复制的文生图 prompt"
+  default_prompt: "Use $image-prompt-cover to create a 16:9 cover-image prompt for this article."
+policy:
+  allow_implicit_invocation: true

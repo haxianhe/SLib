@@ -1,7 +1,9 @@
 {
   "name": "slib",
+  "description": "SLib 双平台知识工作流插件目录",
+  "version": "2.0.0",
   "metadata": {
-    "description": "haxianhe 的个人知识工具库"
+    "description": "总结、检索、图表、代码调查、知识同步与文生图提示词"
   },
   "owner": {
     "name": "haxianhe"
@@ -9,15 +11,24 @@
   "plugins": [
     {
       "name": "slib",
-      "description": "个人知识工具库，包含链接总结入库（summary）、多层检索（search）、专业图表绘制（architecture-diagram）等 skill。",
+      "description": "面向 Codex 与 Claude Code 的知识工作流插件。",
+      "version": "2.0.0",
       "author": {
         "name": "haxianhe"
       },
-      "source": {
-        "source": "github",
-        "repo": "haxianhe/SLib",
-        "commit": "main"
-      }
+      "source": "./",
+      "skills": [
+        "./skills/architecture-diagram",
+        "./skills/code-investigation",
+        "./skills/image-prompt-cover",
+        "./skills/image-prompt-info",
+        "./skills/image-prompt-xhs",
+        "./claude-skills/knowledge-sync",
+        "./skills/search",
+        "./skills/summary"
+      ],
+      "category": "Productivity",
+      "strict": true
     }
   ]
 }

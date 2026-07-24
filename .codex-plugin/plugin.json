@@ -1,0 +1,36 @@
+{
+  "name": "slib",
+  "version": "2.0.0",
+  "description": "面向 Codex 与 Claude Code 的知识工作流插件，提供总结、检索、图表、代码调查、知识同步和文生图提示词能力。",
+  "author": {
+    "name": "haxianhe",
+    "url": "https://github.com/haxianhe"
+  },
+  "homepage": "https://github.com/haxianhe/SLib",
+  "repository": "https://github.com/haxianhe/SLib",
+  "license": "MIT",
+  "keywords": [
+    "knowledge",
+    "research",
+    "diagram",
+    "productivity"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "SLib",
+    "shortDescription": "总结、检索、图表与知识工作流",
+    "longDescription": "一组可移植的知识工作流 skills，覆盖 URL 总结、多层检索、Draw.io 图表、代码实现调查、显式知识同步和文生图提示词生成。",
+    "developerName": "haxianhe",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/haxianhe/SLib",
+    "defaultPrompt": [
+      "总结这个链接并保存到本地知识库",
+      "检索并整理这个技术问题的可靠资料",
+      "根据这套系统结构生成可编辑的架构图"
+    ]
+  }
+}

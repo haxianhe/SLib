@@ -1,8 +1,12 @@
 {
   "name": "slib",
-  "version": "1.1.2",
-  "description": "个人知识工具库，包含链接总结入库（summary）、多层检索（search）、专业图表绘制（architecture-diagram）等 skill。",
+  "version": "2.0.0",
+  "description": "面向 Codex 与 Claude Code 的知识工作流插件，提供总结、检索、图表、代码调查、知识同步和文生图提示词能力。",
   "author": {
-    "name": "haxianhe"
-  }
+    "name": "haxianhe",
+    "url": "https://github.com/haxianhe"
+  },
+  "homepage": "https://github.com/haxianhe/SLib",
+  "repository": "https://github.com/haxianhe/SLib",
+  "license": "MIT"
 }

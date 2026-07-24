@@ -1,0 +1,6 @@
+interface:
+  display_name: "Search"
+  short_description: "按数据边界安全检索并给出可追溯来源"
+  default_prompt: "Use $search to find reliable current sources for this question and explain any access limitations."
+policy:
+  allow_implicit_invocation: true

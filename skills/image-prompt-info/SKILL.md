@@ -1,25 +1,19 @@
 ---
 name: image-prompt-info
-description: |
-  信息图(infographic)AI 文生图 prompt 产出助手。把数据/教程/概念组织成视觉密度高的一张图,
-  输出可直接贴 Midjourney / 即梦 / 通义万象 / Nano Banana 等任意文生图平台的 prompt 文件。
-  不调用任何文生图 API。触发条件:
-  - 用户说"画信息图 / 做信息卡 / 可视化数据 / 高密度大图 / 知识卡片 / dataviz / infographic"
-  - 用户提供数据或教程内容并希望出一张视觉化图
-  - 用户给出多个并列项(>5 个)并希望整合成单图
+description: Use when 用户要求把数据、教程、概念或五个以上并列项组织成信息图、知识卡片、dataviz 或高密度单图的文生图 prompt。
 ---
 
 # image-prompt-info:信息图 AI 文生图 prompt 助手
 
 把内容翻译成专业、好看的信息图 prompt,用户拿到任意文生图平台都能出图。
 
-不调任何后端 API,只产 prompt 文件。
+不调用任何文生图 API 或后端，只产 prompt 文件。
 
 ---
 
 ## 1. 快速选(推荐预设)
 
-不知道选啥?默认按下表选最近 1 项。Claude 会按你内容里出现的关键词自动推。
+不知道选啥?默认按下表选最近 1 项。agent 会按内容里出现的关键词自动推。
 
 | 预设 | 看起来像 | 用在哪 | 预览 |
 |---|---|---|---|
@@ -37,7 +31,7 @@ description: |
 ## 2. 完整库(自由组合)
 
 第 1 层预设没覆盖的需求,可以从下面自由挑 layout × style × palette。
-Claude 会按你的选择去 `references/` 读完整视觉指令,拼到 prompt。
+agent 会按你的选择去 `references/` 读完整视觉指令,拼到 prompt。
 
 ### 2.1 Layout(21)
 
@@ -119,7 +113,7 @@ Claude 会按你的选择去 `references/` 读完整视觉指令,拼到 prompt�
 | A vs B 对比 | `binary-comparison` | `corporate-memphis` | —(style 自带) |
 | 冰山揭示 | `iceberg` | `craft-handmade` | `macaron` |
 
-### 2.5 内容 → 预设推荐规则(Claude 自动用)
+### 2.5 内容 → 预设推荐规则
 
 | 内容信号(关键词) | 默认推预设 |
 |---|---|
@@ -143,7 +137,7 @@ Claude 会按你的选择去 `references/` 读完整视觉指令,拼到 prompt�
 - 一个本地文件路径
 - 一句模糊主题(如「帮我做一个 Git 速查图」)
 
-如果用户给的是 URL,**不主动抓取**,提示用 `slib:summary` 先拉下来再回来。
+如果用户给的是 URL，**不主动抓取**，提示先用 `summary` 获取正文再回来。
 
 ### Step 2: 内容分析 + 推预设
 
@@ -164,7 +158,7 @@ Claude 会按你的选择去 `references/` 读完整视觉指令,拼到 prompt�
 
 ### Step 3: 拼 prompt 文件
 
-按预设解析为 layout + style + palette + aspect,然后:
+按预设解析为 layout + style + palette + aspect；用户未指定比例时默认使用 `9:16`。然后:
 
 1. 读 `references/base-prompt.md` 拿模板骨架
 2. 读 `references/layouts/<layout>.md` 拿布局描述
@@ -173,13 +167,13 @@ Claude 会按你的选择去 `references/` 读完整视觉指令,拼到 prompt�
 5. 按 base-prompt.md 的拼装顺序生成 prompt 正文
 6. 套用第 4 节「Prompt 文件格式」生成完整 .md
 
-### Step 4: 落盘 + 终端展示
+### Step 4: 落盘 + 对话展示
 
-落到 `~/knowledge/image-prompts/{YYYY-MM-DD}-{slug}/prompt.md`。
+落到 `~/KnowledgeDB/image-prompts/{YYYY-MM-DD}-{slug}/prompt.md`。
 
 `{slug}` 规则:从主题取 2-4 词 kebab-case;冲突时追加 `-HHMMSS`。
 
-终端**完整展示** prompt 正文(包在代码块里方便复制)+ 输出文件路径。
+当前对话中**完整展示** prompt 正文（包在代码块里方便复制）和输出文件路径。
 
 ### Step 5: 提示下一步
 

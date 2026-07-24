@@ -1,302 +1,166 @@
 # SLib
 
-个人 Skill 库，提供开箱即用的工作流 skill，支持 Claude Code 和 Codex 安装，安装后自动注入到会话中。
+SLib 2.0 是一组同时支持 Codex 与 Claude Code 的知识工作流 skills。核心能力不捆绑 MCP、浏览器扩展或特定知识平台；可选能力不可用时会给出明确降级路径。
 
-## 包含 Skill
+## Skills
 
-| Skill | 适用场景 |
-|-------|---------|
-| [`summary`](#summary) | 抓取链接内容，提炼总结并写入本地知识库 |
-| [`search`](#search) | 多层降级检索，自动应对企业防火墙阻断外网访问的问题 |
-| [`architecture-diagram`](#architecture-diagram) | 专业图表绘制，输出 drawio 格式 |
-| [`code-investigation`](#code-investigation) | 代码实现全景调查，输出结构化调查报告 |
-| [`image-prompt-info`](#image-prompt-info)   | 信息图 AI 文生图 prompt(产 prompt 文件,自己拿去文生图平台出图) |
-| [`image-prompt-cover`](#image-prompt-cover) | 文章封面图 AI 文生图 prompt |
-| [`image-prompt-xhs`](#image-prompt-xhs)     | 小红书图卡 AI 文生图 prompt(多张系列,1-10 张) |
-
----
-
-## 📌 新用户须知
-
-第一次用前,先理清两件事,免得期望对不上:
-
-- **三个 `image-prompt-*` skill 只产 prompt 文本,不直接出图**。产出物是 `prompt.md` 文件,需要你自己复制到 Midjourney / 即梦 / 通义万象 / Nano Banana 等任意文生图平台贴出来才能拿到图。SLib 不调任何文生图 API,也不会消耗任何 token 之外的费用。
-- **`architecture-diagram` 是真出图**,通过 drawio MCP 直接打开预览,不要和上面三个混淆。
-- **`search` 的 Layer 4 用到 `agent-browser`,这是可选依赖**。前 3 层(WebSearch / WebFetch / curl)都失败时才会降级到它,装了能突破企业防火墙抓更多页面。不装也能用,只是少一层兜底。安装方式见下方[可选依赖](#可选依赖agent-browser)。
-
----
+| Skill | 用途 | 默认副作用 |
+|---|---|---|
+| `summary` | 总结 URL 或正文，按确认路径保存 | 写入前确认 |
+| `search` | 检索公开资料；受控使用登录态 | 登录态访问前确认 |
+| `architecture-diagram` | 生成可编辑 `.drawio` 图表 | 先写文件，再打开在线编辑器 |
+| `code-investigation` | 只读梳理代码分布、调用链和配置 | 无代码修改 |
+| `knowledge-sync` | 把 Markdown 同步到已连接文档服务 | 仅显式调用，外部写入前确认 |
+| `image-prompt-info` | 生成信息图文生图 prompt | 只写 prompt，不出图 |
+| `image-prompt-cover` | 生成封面文生图 prompt | 只写 prompt，不出图 |
+| `image-prompt-xhs` | 生成 1–10 张社交图卡 prompts | 只写 prompt，不出图 |
 
 ## 安装
 
-### Claude Code
-
-**前置依赖**：[Claude Code](https://claude.ai/code)
-
-```bash
-claude plugins marketplace add haxianhe/SLib
-claude plugins install slib
-```
-
-安装完成后**重启 Claude Code** 即可生效。
-
 ### Codex
 
-**前置依赖**：[Codex CLI](https://github.com/openai/codex)
-
 ```bash
-# 添加 marketplace 源
 codex plugin marketplace add haxianhe/SLib
-
-# 安装插件
-codex plugin add slib@SLib
+codex plugin add slib@slib
 ```
 
-安装完成后重启 Codex 即可生效。
+安装后开启新会话。除 `knowledge-sync` 外可自然描述任务，也可显式使用 `$slib:summary`、`$slib:search` 等 skill。`knowledge-sync` 仅允许显式调用：`$slib:knowledge-sync`。
 
-### 可选依赖:agent-browser
-
-仅 `search` skill 的 Layer 4 兜底使用。前 3 层都失败、或需要带登录态抓页面时才会调用。不装也能用。
+升级：
 
 ```bash
-# macOS
-brew install agent-browser
-agent-browser install     # 完成 Chromium 等运行时初始化
-
-# 跨平台(任意有 Node.js 的环境)
-npm install -g agent-browser
-agent-browser install
+codex plugin marketplace upgrade slib
+codex plugin add slib@slib
 ```
 
-验证安装:
+卸载：
 
 ```bash
-agent-browser --version
+codex plugin remove slib@slib
+codex plugin marketplace remove slib
 ```
 
-更多用法见 [agent-browser.dev](https://agent-browser.dev/)。
+### Claude Code
 
----
-
-## Skill 说明
-
-### summary
-
-**触发条件**：
-
-- 粘贴 URL 并说"帮我总结"、"提炼一下"、"保存到知识库"
-- "帮我总结这篇文章"
-- "记录一下这篇"
-
-**用法示例**：
-
-```
-用户：https://example.com/article 帮我总结
-用户：帮我提炼这篇文章的核心观点，关注架构设计部分：https://example.com/design
+```bash
+claude plugin marketplace add haxianhe/SLib
+claude plugin install slib@slib
 ```
 
-**执行流程**：抓取内容（chrome-mcp → WebFetch → 用户粘贴）→ 识别文章类型 → 按模板提炼 → 写入 `~/knowledge/YYYY-MM-DD-{标题}.md`
+安装后开启新会话。除 `knowledge-sync` 外可自然描述任务，也可显式使用 `/slib:summary`、`/slib:search` 等 skill。`knowledge-sync` 仅允许显式调用：`/slib:knowledge-sync`。
 
-**支持的文章类型**：技术文章、产品/案例、通用
+升级或卸载：
 
----
-
-### search
-
-**触发条件**：
-
-- "帮我搜索 / 查一下 / 找一下 X"
-- 技术问题、工具用法、行业信息等需要检索资料的场景
-- "X 是什么"、"怎么做 X"、"有没有 X 相关资料"
-- WebSearch / WebFetch 调用失败，需要切换检索方式
-- 访问不了外网、被防火墙拦截、网络受限等情形
-
-**用法示例**：
-
-```
-用户：帮我搜索 Rust async runtime 的原理
-用户：查一下 Kubernetes HPA 的配置参数
-用户：WebSearch 访问失败，帮我换个方式搜一下
+```bash
+claude plugin update slib@slib
+claude plugin uninstall slib@slib
 ```
 
-**执行流程**：WebSearch → WebFetch → curl → agent-browser，依次降级直到获得有效内容
+## 使用说明
 
----
+### URL 总结
 
-### architecture-diagram
-
-**触发条件**：
-
-- "画一个架构图 / 流程图 / 时序图 / 思维导图"
-- "帮我画图"、"用 drawio 画"
-- 描述系统结构、模块依赖、调用链路并希望可视化
-- 提供既有图表想要修改或补充
-
-**用法示例**：
-
-```
-用户：画一个电商订单系统的分层架构图
-用户：画一下用户登录的时序图
-用户：帮我画一个 RAG 系统的数据流图，要正式一点
+```text
+总结这篇文章并保存到知识库：https://example.com/article
 ```
 
-**执行流程**：需求分析 → 结构设计 → 应用配色方案 → 调用 `mcp__drawio__open_drawio_xml` 直接打开预览
+`summary` 使用当前平台已有的网页读取能力。遇到登录墙、访问控制或网络失败时会请你粘贴正文，不会依据标题编造内容。默认保存到：
 
-**配色规范**：内置流程图、架构图、状态图三套配色。复杂图（节点 > 10 或层级 > 3）或用户要求"画好看"时，会先确认结构再动手。
-
----
-
-### code-investigation
-
-**定位**：对项目中某个功能/模块/特性进行全面扫描，输出结构化调查报告（核心类表格 + 调用流程 + 配置项 + 设计要点 + 边界区分）。一次 grep 只能告诉你"在哪出现"，全景调查让你看清一个功能的全貌。
-
-**触发条件**：
-
-- "帮我检查 X 相关实现"、"X 功能的代码在哪"、"梳理 X 逻辑"
-- "调查 / 扫描 / 摸底 X 模块"、"X 代码分布在哪些文件"
-- "帮我理清 X 的调用链路"、"X 涉及哪些类"
-- 想全面了解某个功能在代码库中的分布、流转、配置和设计决策
-
-**用法示例**：
-
-```
-用户：帮我梳理一下 Token 校验的完整逻辑
-用户：调查一下订单状态机的实现全景
-用户：看看缓存失效策略代码分布在哪些文件
+```text
+~/KnowledgeDB/raw/YYYY-MM-DD-{slug}.md
 ```
 
-**执行流程**：广度搜索（多维度 grep/find）→ 分类归档 → 深度阅读 → 产出结构化报告
+### 安全检索
 
----
-
-### image-prompt-info
-
-**定位**:把数据 / 教程 / 概念组织成视觉密度高的一张信息图,产出可直接复制的文生图 prompt 文件。**不调任何后端 API**。
-
-**触发条件**:
-
-- "画信息图 / 做信息卡 / 可视化数据"
-- "高密度大图 / 知识卡片 / dataviz / infographic"
-- 提供数据或教程内容并希望出一张视觉化图
-
-**用法示例**:
-
-```
-用户:帮我做一个信息图,讲 5 个 Git 高频命令
-用户:把 Q1 季度数据做成一张可视化图
+```text
+检索 Kubernetes HPA 当前官方配置，并给出来源。
 ```
 
-**第 1 层精选预设(8 个)**:
+公开查询优先官方与一手来源。内部或登录态查询不会把关键词发送到公开搜索引擎；使用浏览器身份前会确认域名、账号范围和读取内容。`401/403`、付费墙和组织策略不会被当成需要绕过的障碍。
 
-| 预设 | 一句话 |
-|---|---|
-| 知识卡 | 米黄牛皮纸 + 手绘 + 马卡龙色块,亲和入门 |
-| 复古高密度 | 1970s 波普 + Swiss 栅格,长图速查 |
-| 流程教程 | 宜家说明书风,纯线稿步骤 |
-| 数据看板 | 公司年报风,扁平矢量 + 数字大 |
-| 赛博朋克 | 紫黑底 + 霓虹粉绿,AI 风 |
-| 黑板手写 | 深绿黑板 + 粉笔字,课堂感 |
-| A vs B 对比 | 左右两栏强对比 |
-| 冰山揭示 | 上 1/8 表象 + 下 7/8 本质 |
+### Draw.io 图表
 
-**输出位置**:`~/knowledge/image-prompts/{date}-{slug}/prompt.md`
-
-**完整 22 种 style × 21 种 layout × 3 种 palette** 见 `skills/image-prompt-info/SKILL.md` 第 2 节。
-
----
-
-### image-prompt-cover
-
-**定位**:给文章 / 博客 / Newsletter / 视频缩略图配主视觉,产出可直接复制的文生图 prompt 文件。**不调任何后端 API**。
-
-**触发条件**:
-
-- "做文章封面 / 封面图 / banner / cover / 配题图"
-- 有文章 / 标题想配主视觉
-
-**用法示例**:
-
-```
-用户:给这篇讲 CAP 定理的文章配个封面
-用户:帮我做一个 Newsletter 头条 banner
+```text
+画一个订单系统分层架构图，输出 Draw.io。
 ```
 
-**第 1 层精选预设(6 个)**:
+`architecture-diagram` 始终先生成并验证 `.drawio`，再优先打开：
 
-| 预设 | 一句话 |
-|---|---|
-| 极客蓝图 | 深蓝纸底 + 白色细工程线,科技严谨 |
-| 温暖手绘 | 暖米黄 + 手绘抖动线 + 简笔人物 |
-| 高对比海报 | 浓黑/酒红/芒果黄 + 厚描边 + 大字标题 |
-| 极简文字 | 白底,巨大无衬线标题居中,留白 70% |
-| 暗色氛围 | 深紫黑底 + 渐变光晕 + 玻璃质感卡片 |
-| 油画肖像 | 厚涂笔触 + 暖光 + 人物剪影 |
+<https://app.diagrams.net/?lang=zh&mode=device>
 
-**输出位置**:`~/knowledge/image-prompts/{date}-{slug}/prompt.md`
+在线编辑器不会自动读取本地文件。选择“从设备打开”，或把 `.drawio` 拖到空白画布。浏览器、Draw.io MCP 或桌面应用均不是硬依赖；预览失败不影响文件交付。
 
-**完整 6 type × 11 palette × 7 rendering** 见 `skills/image-prompt-cover/SKILL.md` 第 2 节。
+### 显式知识同步
 
-> ⚠️ baoyu-cover-image 仓库未提供截图,预览暂空白。
-
----
-
-### image-prompt-xhs
-
-**定位**:把内容拆成 1-10 张图卡系列(竖版 3:4),适合小红书 / 公众号头条九宫格 / IG 故事。每张产出独立 prompt 文件。**不调任何后端 API**。
-
-**触发条件**:
-
-- "做小红书图 / 出图卡 / 社交多图 / xhs / 知识小抄"
-- 想出分张的图卡系列(3 张 / 6 张 / 9 张等)
-
-**用法示例**:
-
-```
-用户:做一组讲早睡早起的 6 张小红书图卡
-用户:把这篇心得拆成 9 张图,九宫格预览
+```text
+Codex: $slib:knowledge-sync 把 notes/design.md 同步到我已连接的文档服务。
+Claude Code: /slib:knowledge-sync 把 notes/design.md 同步到我已连接的文档服务。
 ```
 
-**第 1 层精选预设(6 个)**:
+`knowledge-sync` 仅在用户显式调用时运行，不会被模型自动触发，也不会擅自选择平台。它会展示连接器、目标位置、创建/更新方式、可见范围和内容预览；得到明确确认并核验连接器返回结果后才报告成功。
 
-| 预设 | 一句话 |
-|---|---|
-| 可爱知识卡 | 米奶油底 + 圆角卡 + 樱花粉/薄荷绿 + Q 版小人 |
-| 清新生活流 | 莫兰迪绿 + 极细线 + 大面积留白 |
-| 暖光叙事 | 暖橙 + 蜜桃,胶片颗粒感 + 居家光晕 |
-| 干货知识小抄 | 粉底 + 黑色粗框 + 序号大字 + 密排短句 |
-| 故事封面 | 1 大主图 + 顶部短金句,留白 60% |
-| 前后对比 | 上下/左右两半,左灰右彩 |
+### 图片 prompt
 
-**输出位置**:`~/knowledge/image-prompts/{date}-{slug}/prompts/01-{slug}.md` ... `NN-{slug}.md`(多张)
+三个 `image-prompt-*` skill 只生成 Markdown prompt，不调用文生图 API。默认目录：
 
-**默认 6 张**,可调 1/3/6/9。**完整 12 style × 6 layout × 3 palette** 见 `skills/image-prompt-xhs/SKILL.md` 第 2 节。
-
----
-
-## 目录结构
-
+```text
+~/KnowledgeDB/image-prompts/
 ```
+
+把生成的 Prompt 复制到你选择的文生图平台即可。
+
+## 依赖与降级
+
+| 能力 | 核心是否依赖 | 不可用时 |
+|---|---|---|
+| MCP server | 否 | 使用平台原生工具或返回手动步骤 |
+| 浏览器 | 否 | 返回 URL、文件和导入指引 |
+| 文档连接器 | 仅 `knowledge-sync` 需要 | 不写入，提示先连接服务 |
+| 文生图 API | 否 | 始终只输出 prompt |
+| Node.js | 仅仓库开发测试需要 | 不影响已安装 skills |
+
+## 从 1.x 升级
+
+2.0 包含破坏性变更：
+
+- 移除 `afeaturemerge`、`learning` 和会话引导 `using-slib`。
+- 移除 SessionStart/PostToolUse hooks，不再自动注入或提示同步。
+- 云文档同步改为仅显式调用的 `knowledge-sync`。
+- 图片 prompt 路径从 `~/knowledge/image-prompts/` 改为 `~/KnowledgeDB/image-prompts/`。
+
+旧目录不会自动迁移或删除。需要保留历史产物时，请自行复制到新目录。
+
+## 开发与验证
+
+```bash
+npm test
+python3 /path/to/plugin-creator/scripts/validate_plugin.py .
+claude plugin validate .
+```
+
+最后一条仅在本机已安装 Claude Code CLI 时运行。
+
+## 目录
+
+```text
 SLib/
+├── .agents/plugins/marketplace.json
+├── .codex-plugin/plugin.json
 ├── .claude-plugin/
-│   ├── plugin.json         # plugin 元数据
-│   └── marketplace.json    # marketplace 声明
-├── hooks/
-│   ├── hooks.json          # hook 配置（SessionStart + PostToolUse）
-│   ├── session-start       # 会话启动时注入 using-slib
-│   ├── slib-sync.sh        # 通用 .md 写入云端同步提示 hook
-│   └── run-hook.cmd        # 跨平台 hook 入口
+├── claude-skills/knowledge-sync/  # Claude 显式调用覆盖层
 ├── skills/
-│   ├── using-slib/         # 会话引导文件（自动注入）
-│   ├── summary/            # 文章总结 skill
-│   ├── search/             # 多层降级检索 skill
-│   ├── architecture-diagram/  # 专业图表绘制 skill
-│   ├── code-investigation/    # 代码实现全景调查 skill
-│   ├── image-prompt-info/      # 信息图 AI prompt skill
-│   ├── image-prompt-cover/     # 封面图 AI prompt skill
-│   └── image-prompt-xhs/       # 小红书图卡 AI prompt skill
-└── package.json
+│   ├── architecture-diagram/
+│   ├── code-investigation/
+│   ├── image-prompt-cover/
+│   ├── image-prompt-info/
+│   ├── image-prompt-xhs/
+│   ├── knowledge-sync/
+│   ├── search/
+│   └── summary/
+└── tests/
 ```
 
----
+`knowledge-sync` 的正文工作流在两个平台保持一致，但显式调用开关属于平台专属元数据：Codex 使用 `agents/openai.yaml`，Claude Code 使用 `claude-skills/` 覆盖层。测试会验证两个平台最终都只暴露 8 个 skill。
 
 ## License
 

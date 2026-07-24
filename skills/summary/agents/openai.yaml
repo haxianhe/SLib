@@ -1,0 +1,6 @@
+interface:
+  display_name: "Summary"
+  short_description: "总结 URL 或正文并按确认路径保存到知识库"
+  default_prompt: "Use $summary to summarize this URL and save it to my local knowledge base after confirmation."
+policy:
+  allow_implicit_invocation: true

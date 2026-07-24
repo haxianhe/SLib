@@ -1,0 +1,6 @@
+interface:
+  display_name: "Architecture Diagram"
+  short_description: "生成可编辑 Draw.io 图并优先打开在线编辑器"
+  default_prompt: "Use $architecture-diagram to create an editable Draw.io diagram for this system."
+policy:
+  allow_implicit_invocation: true

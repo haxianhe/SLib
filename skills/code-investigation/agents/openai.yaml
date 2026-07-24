@@ -1,0 +1,6 @@
+interface:
+  display_name: "Code Investigation"
+  short_description: "只读梳理功能代码分布、调用链和设计边界"
+  default_prompt: "Use $code-investigation to map this feature's implementation without changing the repository."
+policy:
+  allow_implicit_invocation: true

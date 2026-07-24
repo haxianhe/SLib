@@ -1,0 +1,6 @@
+interface:
+  display_name: "XHS Card Prompts"
+  short_description: "把内容拆成连续编号的竖版社交图卡 prompt"
+  default_prompt: "Use $image-prompt-xhs to turn this tutorial into a six-card social post prompt series."
+policy:
+  allow_implicit_invocation: true

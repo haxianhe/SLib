@@ -1,18 +1,13 @@
 ---
 name: image-prompt-xhs
-description: |
-  小红书图卡 AI 文生图 prompt 产出助手。把一段内容拆成 1-10 张图卡系列(竖版 3:4),
-  适合小红书 / 公众号头条九宫格 / IG 故事系列。输出可直接贴 Midjourney / 即梦 / 通义万象 /
-  Nano Banana 等任意文生图平台的 prompt 文件(多张时多份)。不调用任何文生图 API。触发条件:
-  - 用户说"做小红书图 / 出图卡 / 社交多图 / 多张图卡 / xhs / 知识小抄"
-  - 用户想出分张的图卡系列(3 张 / 6 张 / 9 张等)
+description: Use when 用户要求把内容拆成 1-10 张小红书图卡、社交多图、九宫格、IG 故事或竖版 3:4 知识卡片系列的文生图 prompt。
 ---
 
 # image-prompt-xhs:小红书图卡 AI 文生图 prompt 助手
 
 把内容拆成多张竖版图卡,每张产出独立 prompt 文件。
 
-不调任何后端 API,只产 prompt 文件。
+不调用任何文生图 API 或后端，只产 prompt 文件。
 
 ---
 
@@ -122,7 +117,7 @@ xhs 跟 info / cover 的关键差别:**一次产出多张 prompt 文件**。
 接受:
 - 一段文字内容(主题、段落、文章)
 - 一句模糊主题(如「做一组讲早睡早起的小红书图卡」)
-- (URL 类同 info,提示先 `slib:summary` 拉)
+- URL 处理同 `image-prompt-info`，提示先用 `summary` 获取正文
 
 如果用户没指定张数,默认 6 张。可在对话里说"3 张/9 张/...",或追问一次。
 
@@ -154,12 +149,12 @@ xhs 跟 info / cover 的关键差别:**一次产出多张 prompt 文件**。
 5. 拼出 prompt 正文
 6. 套 prompt 文件格式生成 `01-{slug}.md` / `02-{slug}.md` / ...
 
-### Step 4: 落盘 + 终端展示
+### Step 4: 落盘 + 对话展示
 
-落到 `~/knowledge/image-prompts/{YYYY-MM-DD}-{slug}/prompts/01-{slug}.md`(及 02..NN)。
+落到 `~/KnowledgeDB/image-prompts/{YYYY-MM-DD}-{slug}/prompts/01-{slug}.md`(及 02..NN)。
 封面图独立编号 01,总结独立编号 NN,中间是主体。
 
-终端展示:
+当前对话展示：
 - 第 1 张(封面)完整 prompt 块
 - 其他张:仅打印「02 - 主体: {小标题}」「03 - 主体: ...」等条目
 - 所有文件路径
@@ -167,7 +162,7 @@ xhs 跟 info / cover 的关键差别:**一次产出多张 prompt 文件**。
 ### Step 5: 提示下一步
 
 ```
-6 张 prompt 已生成:~/knowledge/image-prompts/2026-05-29-{slug}/prompts/
+6 张 prompt 已生成:`~/KnowledgeDB/image-prompts/2026-05-29-{slug}/prompts/`
 
 要调整?试试:
 - "改成 3 张"(重新规划张数)
@@ -189,7 +184,7 @@ xhs 跟 info / cover 的关键差别:**一次产出多张 prompt 文件**。
 ### 4.1 多图目录结构
 
 ```
-~/knowledge/image-prompts/2026-05-29-{slug}/
+~/KnowledgeDB/image-prompts/2026-05-29-{slug}/
 └── prompts/
     ├── 01-{slug}.md   # 封面(role: cover)
     ├── 02-{slug}.md   # 主体 1

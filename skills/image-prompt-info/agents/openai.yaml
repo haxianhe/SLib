@@ -1,0 +1,6 @@
+interface:
+  display_name: "Infographic Prompt"
+  short_description: "把数据与教程组织成高密度信息图 prompt"
+  default_prompt: "Use $image-prompt-info to turn these metrics into a clear infographic prompt."
+policy:
+  allow_implicit_invocation: true

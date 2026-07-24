@@ -1,0 +1,21 @@
+{
+  "name": "slib",
+  "interface": {
+    "displayName": "SLib"
+  },
+  "plugins": [
+    {
+      "name": "slib",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/haxianhe/SLib.git",
+        "ref": "v2.0.0"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

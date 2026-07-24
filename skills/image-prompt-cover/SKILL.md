@@ -1,19 +1,13 @@
 ---
 name: image-prompt-cover
-description: |
-  文章封面图 AI 文生图 prompt 产出助手。给文章 / 博客 / Newsletter / 视频缩略图配主视觉,
-  输出可直接贴 Midjourney / 即梦 / 通义万象 / Nano Banana 等任意文生图平台的 prompt 文件。
-  常用 16:9 / 2.35:1 / 1:1 比例。不调用任何文生图 API。触发条件:
-  - 用户说"做文章封面 / 封面图 / banner / cover / 配题图"
-  - 用户有文章 / 标题想配主视觉
-  - 用户说"给这篇文章配个封面"
+description: Use when 用户要求为文章、博客、Newsletter 或视频缩略图设计封面、banner、cover 或配题图的文生图 prompt。
 ---
 
 # image-prompt-cover:文章封面图 AI 文生图 prompt 助手
 
 给文章配主视觉,产出可直接复制的 prompt 文件。
 
-不调任何后端 API,只产 prompt 文件。
+不调用任何文生图 API 或后端，只产 prompt 文件。
 
 ---
 
@@ -36,7 +30,7 @@ description: |
 ## 2. 完整库(自由组合)
 
 封面图按 5 维度自由组合:Type × Palette × Rendering × Text × Mood × Font。
-Claude 会按你的选择去 `references/` 读完整描述,拼到 prompt。
+agent 会按你的选择去 `references/` 读完整描述,拼到 prompt。
 
 ### 2.1 Type(6)
 
@@ -126,7 +120,7 @@ Claude 会按你的选择去 `references/` 读完整描述,拼到 prompt。
 | 暗色氛围 | `conceptual` | `dark` | `digital` | `title-only` | `balanced` | `serif` |
 | 油画肖像 | `scene` | `warm` | `painterly` | `title-only` | `bold` | `serif` |
 
-### 2.7 内容 → 预设推荐规则(Claude 自动用)
+### 2.7 内容 → 预设推荐规则
 
 | 内容信号(关键词) | 默认推预设 |
 |---|---|
@@ -150,7 +144,7 @@ Claude 会按你的选择去 `references/` 读完整描述,拼到 prompt。
 - 一个本地文件路径
 - 一句模糊主题(如「给这篇技术债的文章配个封面」)
 
-如果用户给的是 URL,**不主动抓取**,提示用 `slib:summary` 先拉下来再回来。
+如果用户给的是 URL，**不主动抓取**，提示先使用 `summary` 取得正文再继续。
 
 ### Step 2: 内容分析 + 推预设
 
@@ -181,13 +175,13 @@ Claude 会按你的选择去 `references/` 读完整描述,拼到 prompt。
 6. 按 base-prompt.md 的拼装顺序生成 prompt 正文
 7. 套用第 4 节「Prompt 文件格式」生成完整 .md
 
-### Step 4: 落盘 + 终端展示
+### Step 4: 落盘 + 对话展示
 
-落到 `~/knowledge/image-prompts/{YYYY-MM-DD}-{slug}/prompt.md`。
+落到 `~/KnowledgeDB/image-prompts/{YYYY-MM-DD}-{slug}/prompt.md`。
 
 `{slug}` 规则:从文章标题取 2-4 词 kebab-case;冲突时追加 `-HHMMSS`。
 
-终端**完整展示** prompt 正文(包在代码块里方便复制)+ 输出文件路径。
+当前对话中**完整展示** prompt 正文（包在代码块里方便复制）和输出文件路径。
 
 ### Step 5: 提示下一步
 
