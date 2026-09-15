@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- `writing-review-briefs`：提纲式技术方案写作，支持脱敏复用；包含通用写作规则与虚构示例。
+
 ## 2.0.0
 
 ### Added

@@ -1,0 +1,4 @@
+interface:
+  display_name: "提纲式技术方案写作"
+  short_description: "撰写精炼的技术评审方案，突出机制、责任与约束，支持脱敏复用"
+  default_prompt: "使用 $writing-review-briefs 将以下材料改写为提纲式技术方案，保留实施状态并对内部信息脱敏。"

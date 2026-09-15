@@ -6,6 +6,7 @@ SLib 2.0 是一组同时支持 Codex 与 Claude Code 的知识工作流 skills�
 
 | Skill | 用途 | 默认副作用 |
 |---|---|---|
+| `writing-review-briefs` | 提纲式技术方案写作，支持脱敏复用 | 默认只在对话中输出 |
 | `summary` | 总结 URL 或正文，按确认路径保存 | 写入前确认 |
 | `search` | 检索公开资料；受控使用登录态 | 登录态访问前确认 |
 | `architecture-diagram` | 生成可编辑 `.drawio` 图表 | 先写文件，再打开在线编辑器 |
@@ -57,6 +58,15 @@ claude plugin uninstall slib@slib
 ```
 
 ## 使用说明
+
+### 提纲式技术方案写作
+
+```text
+Codex: $slib:writing-review-briefs 将以下材料改写为技术评审方案，注意脱敏。
+Claude Code: /slib:writing-review-briefs 将以下材料改写为技术评审方案，注意脱敏。
+```
+
+按领域编号，以加粗短标签组织主体、机制与约束，准确保留已实现、计划中和待确认状态。默认输出 Markdown；脱敏时移除内部专名、链接和唯一标识，同时保留责任关系与技术限制。技能及示例不包含参考原文或内部资料，无外部服务依赖。
 
 ### URL 总结
 
@@ -156,11 +166,12 @@ SLib/
 │   ├── image-prompt-xhs/
 │   ├── knowledge-sync/
 │   ├── search/
-│   └── summary/
+│   ├── summary/
+│   └── writing-review-briefs/
 └── tests/
 ```
 
-`knowledge-sync` 的正文工作流在两个平台保持一致，但显式调用开关属于平台专属元数据：Codex 使用 `agents/openai.yaml`，Claude Code 使用 `claude-skills/` 覆盖层。测试会验证两个平台最终都只暴露 8 个 skill。
+`knowledge-sync` 的正文工作流在两个平台保持一致，但显式调用开关属于平台专属元数据：Codex 使用 `agents/openai.yaml`，Claude Code 使用 `claude-skills/` 覆盖层。测试会验证两个平台最终都只暴露 9 个 skill。
 
 ## License
 

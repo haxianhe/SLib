@@ -25,7 +25,8 @@
         "./skills/image-prompt-xhs",
         "./claude-skills/knowledge-sync",
         "./skills/search",
-        "./skills/summary"
+        "./skills/summary",
+        "./skills/writing-review-briefs"
       ],
       "category": "Productivity",
       "strict": true

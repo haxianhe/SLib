@@ -19,6 +19,7 @@ const expectedSkills = [
   "knowledge-sync",
   "search",
   "summary",
+  "writing-review-briefs",
 ];
 
 function skillDirectories() {
@@ -101,10 +102,11 @@ test("marketplaces publish slib@slib from v2.0.0", () => {
     "./skills/image-prompt-xhs",
     "./skills/search",
     "./skills/summary",
+    "./skills/writing-review-briefs",
   ]);
 });
 
-test("only the eight supported skills are public", () => {
+test("only the supported skills are public", () => {
   assert.deepEqual(skillDirectories(), expectedSkills);
   assert.equal(existsSync(fromRoot("hooks")), false);
 });
@@ -290,6 +292,7 @@ test("recorded skill evaluations cover every public workflow", () => {
     "image-prompt-xhs": [/6 个/, /01/, /06/, /不.*API/s],
     "knowledge-sync": [/未同步/, /明确确认/, /不能报告成功/],
     search: [/暂未搜索/, /确认/, /不能静默|不会默认选择.*profile/s],
+    "writing-review-briefs": [/参数不完整/, /仅用于测试环境/, /计划/, /待确认/],
     summary: [/无法总结/, /不能.*编造/s, /粘贴正文/, /确认/],
   };
 
