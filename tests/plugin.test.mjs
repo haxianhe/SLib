@@ -11,6 +11,7 @@ const read = (...parts) => readFileSync(fromRoot(...parts), "utf8");
 const readJson = (...parts) => JSON.parse(read(...parts));
 
 const expectedSkills = [
+  "ai-manju",
   "architecture-diagram",
   "code-investigation",
   "image-prompt-cover",
@@ -45,6 +46,10 @@ function skillSourceDigest() {
     `skills/${skill}/agents/openai.yaml`,
   ]);
   paths.push("claude-skills/knowledge-sync/SKILL.md");
+  paths.push(
+    "skills/ai-manju/references/shot-handoff.md",
+    "skills/ai-manju/references/automation.md",
+  );
   const digest = createHash("sha256");
   for (const path of paths.sort()) {
     digest.update(path);
@@ -95,6 +100,7 @@ test("marketplaces publish slib@slib from v2.0.0", () => {
   assert.equal(claude.plugins[0].source, "./");
   assert.deepEqual(claude.plugins[0].skills.sort(), [
     "./claude-skills/knowledge-sync",
+    "./skills/ai-manju",
     "./skills/architecture-diagram",
     "./skills/code-investigation",
     "./skills/image-prompt-cover",
@@ -285,6 +291,7 @@ test("recorded skill evaluations cover every public workflow", () => {
   );
 
   const responseContracts = {
+    "ai-manju": [/shot_001/, /CLI/, /剪映/, /超时/, /会员/],
     "architecture-diagram": [/不会.*虚报/s, /XML/, /parent/, /从设备打开|拖放/],
     "code-investigation": [/只读/, /证据/, /未修改/],
     "image-prompt-cover": [/不直接生成图片/, /不.*API/s, /KnowledgeDB/],

@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- 新增 `ai-manju`：AI 漫剧与影视短片制作，涵盖角色一致性、镜头素材交接、即梦 / Seedance 接入与剪映草稿及导出边界。
+
+
+## Unreleased
+
 ### Added
 
 - `writing-review-briefs`：提纲式技术方案写作，支持脱敏复用；包含通用写作规则与虚构示例。

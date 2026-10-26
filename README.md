@@ -6,6 +6,7 @@ SLib 2.0 是一组同时支持 Codex 与 Claude Code 的知识工作流 skills�
 
 | Skill | 用途 | 默认副作用 |
 |---|---|---|
+| `ai-manju` | AI 漫剧与影视短片：剧本、分镜、图片、视频与剪映交接 | 按请求生成本地素材；付费生成按授权范围执行 |
 | `writing-review-briefs` | 提纲式技术方案写作，支持脱敏复用 | 默认只在对话中输出 |
 | `summary` | 总结 URL 或正文，按确认路径保存 | 写入前确认 |
 | `search` | 检索公开资料；受控使用登录态 | 登录态访问前确认 |
@@ -109,6 +110,15 @@ Claude Code: /slib:knowledge-sync 把 notes/design.md 同步到我已连接的�
 
 `knowledge-sync` 仅在用户显式调用时运行，不会被模型自动触发，也不会擅自选择平台。它会展示连接器、目标位置、创建/更新方式、可见范围和内容预览；得到明确确认并核验连接器返回结果后才报告成功。
 
+### AI 漫剧与影视短片
+
+```text
+Codex: $slib:ai-manju 用 Codex、即梦和剪映制作一部 60 秒 2D 漫剧，先交付剧本、角色设定和分镜提示词。
+Claude Code: /slib:ai-manju 根据已有角色图制作分镜与即梦视频提示词，整理剪映素材交接包。
+```
+
+按稳定镜头编号组织角色参考、图片提示词、视频提示词、候选视频和对白。可用图片生成工具时支持实际出图；未接入工具时交付提示词并标明未生成。视频自动化优先核验官方 Ark CLI / API；即梦会员不等于 API 权益。剪映社区工具可生成或修改草稿，是否能打开和自动导出需要按系统与版本分别验证。
+
 ### 图片 prompt
 
 三个 `image-prompt-*` skill 只生成 Markdown prompt，不调用文生图 API。默认目录：
@@ -126,7 +136,7 @@ Claude Code: /slib:knowledge-sync 把 notes/design.md 同步到我已连接的�
 | MCP server | 否 | 使用平台原生工具或返回手动步骤 |
 | 浏览器 | 否 | 返回 URL、文件和导入指引 |
 | 文档连接器 | 仅 `knowledge-sync` 需要 | 不写入，提示先连接服务 |
-| 文生图 API | 否 | 始终只输出 prompt |
+| 图片 / 视频生成工具 | `ai-manju` 实际生成素材时需要 | 交付提示词与镜头清单，标明未生成；`image-prompt-*` 仍只产 prompt |
 | Node.js | 仅仓库开发测试需要 | 不影响已安装 skills |
 
 ## 从 1.x 升级
@@ -159,6 +169,7 @@ SLib/
 ├── .claude-plugin/
 ├── claude-skills/knowledge-sync/  # Claude 显式调用覆盖层
 ├── skills/
+│   ├── ai-manju/
 │   ├── architecture-diagram/
 │   ├── code-investigation/
 │   ├── image-prompt-cover/
@@ -171,7 +182,7 @@ SLib/
 └── tests/
 ```
 
-`knowledge-sync` 的正文工作流在两个平台保持一致，但显式调用开关属于平台专属元数据：Codex 使用 `agents/openai.yaml`，Claude Code 使用 `claude-skills/` 覆盖层。测试会验证两个平台最终都只暴露 9 个 skill。
+`knowledge-sync` 的正文工作流在两个平台保持一致，但显式调用开关属于平台专属元数据：Codex 使用 `agents/openai.yaml`，Claude Code 使用 `claude-skills/` 覆盖层。测试会验证两个平台最终都只暴露 10 个 skill。
 
 ## License
 

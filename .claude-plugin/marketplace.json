@@ -18,6 +18,7 @@
       },
       "source": "./",
       "skills": [
+        "./skills/ai-manju",
         "./skills/architecture-diagram",
         "./skills/code-investigation",
         "./skills/image-prompt-cover",

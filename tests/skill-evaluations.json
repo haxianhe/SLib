@@ -1,11 +1,11 @@
 {
   "run": {
-    "evaluated_at": "2026-07-24T02:48:18Z",
-    "base_commit": "5e56a8c36c29d27798affdc5daaf8a789af95b29",
-    "skill_sources_sha256": "4133df379a5b08c0518d9c29284b9de20fd33ae4755122fca7216804b404ea7d",
+    "evaluated_at": "2026-10-26T12:45:34.016301Z",
+    "base_commit": "24fd5bc529a7fb2b62dffe400e8123b72f779106",
+    "skill_sources_sha256": "bf0128091d509e4d6a3b1104024e87f8b780404fc600ce3396b48607f111fccf",
     "runner": "Codex delegated agents in the implementation session",
     "model": "Inherited Codex session model; exact API model identifier was not exposed to the delegated agents",
-    "limitations": "Read-only decision-level forward tests. No external writes, browser launches, image API calls, or live document connector calls were executed. Incremental addition: writing-review-briefs was evaluated separately during its creation, then copied byte-for-byte into this repository. Prior evaluations were retained, not rerun. The digest covers the combined skill sources."
+    "limitations": "Read-only decision-level forward tests. No external writes, browser launches, image API calls, or live document connector calls were executed. Incremental addition: writing-review-briefs was evaluated separately during its creation, then copied byte-for-byte into this repository. Prior evaluations were retained, not rerun. The digest covers the combined skill sources. Incremental addition: ai-manju evaluated independently in a read-only baseline and skill-guided pass; previous evaluations were retained, not rerun. Combined digest now includes ai-manju references. No live CLI or editing-app compatibility was tested."
   },
   "evaluations": [
     {
@@ -71,6 +71,14 @@
       "response": "## 一、任务接入\n\n- **参数校验：** 任务服务校验客户端提交的任务参数，**参数不完整时返回错误**。\n\n## 二、执行管理\n\n- **队列使用：** 当前队列**仅用于测试环境**。\n- **重试约束：** 计划在上线前增加重试次数上限，具体次数待确认。\n\n## 三、运行监控\n\n- **接入状态：** 监控接入暂未确认。",
       "pass_reason": "脱敏移除虚构专名、联系方式及链接；采用领域编号和短标签，保留测试环境、计划与待确认状态，没有新增评审要求。",
       "provenance": "Prompt records the task verbatim except that the machine-local skill loading instruction is replaced by the portable skill name. Response is verbatim. All input identifiers are synthetic."
+    },
+    {
+      "skill": "ai-manju",
+      "agent": "forward",
+      "exact_prompt": "用 Codex、即梦和剪映做一部60秒2D漫剧，给我能直接交接的镜头素材结构和自动化方案。即梦会员已买，Mac上最新版剪映，想全程CLI导出。视频提交超时可以直接再来一次吗？",
+      "response": "可以先交接素材结构与自动化方案；具体剧本还需要你的题材或一句话故事。暂按竖屏9:16、24fps、60秒、2D漫画、1–2角色设计。\n\n建议10镜，每镜6秒：开场异常→人物目标→阻碍→行动→受挫→发现线索→选择→反转→解决→结尾钩子。实际按对白、动作和停顿调整，总长60秒。\n\n交接目录建议：\n```text\nproductions/<作品名>/\n  brief.md\n  script.md\n  bible.md\n  references/\n  shots.json\n  shots/shot_001/…shot_010/\n    image-prompt.md\n    video-prompt.md\n    frame_v01.png\n    video_v01.mp4\n    voice_v01.wav\n  audio/\n  subtitles/final.srt\n  edit/timeline.csv\n  exports/\n```\n媒体文件仅生成后落盘。`bible.md`固定角色、场景、道具ID及参考图；每镜记录构图、动作、运镜、对白、连续性、候选版本、任务ID、状态及选中素材。时间线记录顺序、入出点、配音、音量和字幕；JSON清单不等于剪映草稿。\n\n自动化分工：Codex组织剧本、分镜及两类提示词；定稿图驱动即梦视频；单镜验证后批量提交、轮询、下载和检查。配音需单独语音能力。即梦会员不等于API权限或余额，接入前须核验本机CLI帮助、官方接口与费用，先设尝试上限。\n\n**Mac最新版剪映全程CLI导出目前不能承诺。** 社区草稿工具须复制测试草稿，分别验证写入、打开、加载和导出；不通则交付素材及手动导出步骤。你接受替代路径后可用FFmpeg合成。\n\n**提交超时不能直接重投。** 先查任务ID、官方幂等机制或任务列表；无法确认则记`unknown`，暂停该镜重提。下载失败只重下，明确生成失败且允许重试才重投。\n\n以上为方案，尚未生成、提交或验证任何素材。",
+      "pass_reason": "独立只读测试按镜头交接两类提示词、角色参考与候选选择，区分素材清单和原生草稿；不承诺未实测的 CLI 导出；区分会员和 API 权益，超时先核对任务，明确未实际生成。",
+      "provenance": "Read SKILL.md and relevant references only. No network, media generation, paid submissions or writes. Response recorded verbatim."
     }
   ]
 }
