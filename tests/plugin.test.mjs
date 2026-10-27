@@ -79,7 +79,7 @@ test("Codex and Claude manifests expose SLib 2.0", () => {
   assert.equal(pkg.version, "2.0.0");
 });
 
-test("marketplaces publish slib@slib from v2.0.0", () => {
+test("marketplaces publish slib@slib with Codex tracking main", () => {
   const codex = readJson(".agents", "plugins", "marketplace.json");
   const claude = readJson(".claude-plugin", "marketplace.json");
 
@@ -91,7 +91,7 @@ test("marketplaces publish slib@slib from v2.0.0", () => {
     authentication: "ON_INSTALL",
   });
   assert.equal(codex.plugins[0].source.source, "url");
-  assert.equal(codex.plugins[0].source.ref, "v2.0.0");
+  assert.equal(codex.plugins[0].source.ref, "main");
   assert.equal(codex.plugins[0].category, "Productivity");
 
   assert.equal(claude.name, "slib");

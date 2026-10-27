@@ -28,7 +28,7 @@ codex plugin add slib@slib
 
 安装后开启新会话。除 `knowledge-sync` 外可自然描述任务，也可显式使用 `$slib:summary`、`$slib:search` 等 skill。`knowledge-sync` 仅允许显式调用：`$slib:knowledge-sync`。
 
-升级：
+升级：插件来源跟随 `main` 分支，获取已推送到主分支的最新提交，无需创建版本标签。
 
 ```bash
 codex plugin marketplace upgrade slib
