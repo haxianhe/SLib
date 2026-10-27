@@ -1,11 +1,11 @@
 {
   "run": {
-    "evaluated_at": "2026-10-26T12:45:34.016301Z",
-    "base_commit": "24fd5bc529a7fb2b62dffe400e8123b72f779106",
-    "skill_sources_sha256": "bf0128091d509e4d6a3b1104024e87f8b780404fc600ce3396b48607f111fccf",
-    "runner": "Codex delegated agents in the implementation session",
-    "model": "Inherited Codex session model; exact API model identifier was not exposed to the delegated agents",
-    "limitations": "Read-only decision-level forward tests. No external writes, browser launches, image API calls, or live document connector calls were executed. Incremental addition: writing-review-briefs was evaluated separately during its creation, then copied byte-for-byte into this repository. Prior evaluations were retained, not rerun. The digest covers the combined skill sources. Incremental addition: ai-manju evaluated independently in a read-only baseline and skill-guided pass; previous evaluations were retained, not rerun. Combined digest now includes ai-manju references. No live CLI or editing-app compatibility was tested."
+    "evaluated_at": "2026-10-27T05:02:25.361259+00:00",
+    "base_commit": "a62eac3bf31be73acc8fe28d2eeb399b7d85418b",
+    "skill_sources_sha256": "fcd99d8c7b051c7e498d1797220e0590a0e3976fd543c367c43ce49e97873133",
+    "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
+    "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
+    "limitations": "Read-only static decision review of the revised ai-manju skill only; no independent forward test was rerun. Existing evaluations below are historical evidence retained verbatim, not results for this new digest. The digest identifies the current source snapshot, not fresh behavioral coverage of all skills. No media generation, API inference, browser launches, plugin installation or external writes were executed for this repository revision."
   },
   "evaluations": [
     {
@@ -80,5 +80,29 @@
       "pass_reason": "独立只读测试按镜头交接两类提示词、角色参考与候选选择，区分素材清单和原生草稿；不承诺未实测的 CLI 导出；区分会员和 API 权益，超时先核对任务，明确未实际生成。",
       "provenance": "Read SKILL.md and relevant references only. No network, media generation, paid submissions or writes. Response recorded verbatim."
     }
-  ]
+  ],
+  "previous_runs": [
+    {
+      "evaluated_at": "2026-10-26T12:45:34.016301Z",
+      "base_commit": "24fd5bc529a7fb2b62dffe400e8123b72f779106",
+      "skill_sources_sha256": "bf0128091d509e4d6a3b1104024e87f8b780404fc600ce3396b48607f111fccf",
+      "runner": "Codex delegated agents in the implementation session",
+      "model": "Inherited Codex session model; exact API model identifier was not exposed to the delegated agents",
+      "limitations": "Read-only decision-level forward tests. No external writes, browser launches, image API calls, or live document connector calls were executed. Incremental addition: writing-review-briefs was evaluated separately during its creation, then copied byte-for-byte into this repository. Prior evaluations were retained, not rerun. The digest covers the combined skill sources. Incremental addition: ai-manju evaluated independently in a read-only baseline and skill-guided pass; previous evaluations were retained, not rerun. Combined digest now includes ai-manju references. No live CLI or editing-app compatibility was tested."
+    }
+  ],
+  "revision_review": {
+    "skill": "ai-manju",
+    "method": "primary_agent_static_decision_review",
+    "independent_forward_test_rerun": false,
+    "scenarios": "tests/skill-scenarios.md#五步流程修订的决策复核",
+    "observed_issue": "Prior wording preferred reference-based generation but did not require per-shot selected storyboard images or clearly separate standard dialogue and music timing dependencies.",
+    "reviewed_outcomes": [
+      "Storyboard images precede image-to-video unless the user explicitly chooses a different route.",
+      "Music timing changes dependencies without removing the storyboard-image stage.",
+      "Read-only scope does not permit generation as a credential test.",
+      "Existing valid assets and authorization can be reused without repeated approvals.",
+      "Shot, image and remote-task counts are independent."
+    ]
+  }
 }
