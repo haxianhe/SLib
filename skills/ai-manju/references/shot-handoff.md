@@ -19,7 +19,7 @@ productions/<作品名>/
 │       ├── frame_v01.png
 │       ├── video_v01.mp4
 │       └── voice_v01.wav
-├── audio/                      # 配乐、音效及配音
+├── audio/                      # 配乐、音效及配音；按需维护 segments.md
 ├── subtitles/final.srt
 ├── edit/                       # 时间线说明、草稿与导入指引
 └── exports/                    # 最终输出
@@ -92,6 +92,8 @@ productions/<作品名>/
 每次实际提交在 `attempts` 中记录：候选版本、服务与模型、任务 ID（若有）、提交时间、提示词及参考素材版本、状态、结果路径、错误、已知费用。不要保存密钥、Cookie 或带凭据的请求头；临时签名下载链接无需写入可分享清单。
 
 建议状态：`planned`、`submitted`、`running`、`succeeded`、`reviewed`。失败为 `failed`；提交结果不明为 `unknown`。已有 task ID 即使下载失败也优先查询原任务、重新下载，不重新生成。候选选用写入 `selected_video_path`，不通过覆盖文件隐藏历史。
+
+有声音依赖时按 [audio-handoff.md](audio-handoff.md) 补充句 ID、角色、选定音频版本、源入出点、成片时间位置及对应镜头；仅有 `voice_path` 不足以表达口型输入。实际生成记录保存当时使用的音频与人物绑定，修改后按影响范围复核，不将新路径覆盖成旧任务的输入。
 
 ## 一镜两种提示词
 

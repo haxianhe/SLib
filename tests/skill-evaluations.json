@@ -1,11 +1,11 @@
 {
   "run": {
-    "evaluated_at": "2026-10-27T05:25:15.366844+00:00",
-    "base_commit": "8a4686c6c89fe47b18306befc237d2919bfdda0a",
-    "skill_sources_sha256": "8cb1cdf9482564c5f9bec28ab229bf24fbb1f80cc9b9e929d467c0280807cbcd",
+    "evaluated_at": "2026-10-27T12:05:01.367908+00:00",
+    "base_commit": "d78aee64484c78841db294d0a343be690ee900d6",
+    "skill_sources_sha256": "13a20b962e9877bc6496f86880e6e450e23092e390f09c838f085896766153e3",
     "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
     "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
-    "limitations": "Read-only static decision review of plain-text ai-manju episode progress. Chinese status words replace symbolic progress indicators to avoid font rendering issues. No independent forward test or live UI rendering test was rerun; historical evaluations are retained verbatim. The digest identifies the current source snapshot, not fresh behavioral coverage of all skills. No media generation or external writes were performed."
+    "limitations": "Read-only static decision review of ai-manju production routes, audio-to-shot handoff, dependency progress and scoped revision handling. Historical evaluations are retained verbatim; no independent forward test was rerun for this source snapshot. No media generation, paid submissions, live app compatibility tests or external writes were performed."
   },
   "evaluations": [
     {
@@ -113,6 +113,14 @@
       "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
       "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
       "limitations": "Read-only static decision review of ai-manju generic workflow and tool responsibilities; no independent forward test rerun. Historical evaluations and progress review retained, not rerun for this digest. No media generation, live app compatibility testing or plugin installation performed."
+    },
+    {
+      "evaluated_at": "2026-10-27T05:25:15.366844+00:00",
+      "base_commit": "8a4686c6c89fe47b18306befc237d2919bfdda0a",
+      "skill_sources_sha256": "8cb1cdf9482564c5f9bec28ab229bf24fbb1f80cc9b9e929d467c0280807cbcd",
+      "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
+      "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
+      "limitations": "Read-only static decision review of plain-text ai-manju episode progress. Chinese status words replace symbolic progress indicators to avoid font rendering issues. No independent forward test or live UI rendering test was rerun; historical evaluations are retained verbatim. The digest identifies the current source snapshot, not fresh behavioral coverage of all skills. No media generation or external writes were performed."
     }
   ],
   "revision_review": {
@@ -154,6 +162,20 @@
       "Dialogue, narration, action and music adjust dependencies without a duet-only template.",
       "Unavailable tools produce explicit handoffs rather than claims of generated assets.",
       "Explicit user tool choices override defaults."
+    ]
+  },
+  "audio_route_review": {
+    "skill": "ai-manju",
+    "method": "primary_agent_static_decision_review",
+    "independent_forward_test_rerun": false,
+    "scenarios": "tests/skill-scenarios.md#制作路线与音频绑定的决策复核",
+    "reviewed_outcomes": [
+      "Lip-sync and pacing requirements determine execution order, including ordinary dialogue and mixed routes within an episode.",
+      "Audio handoff binds line IDs, roles, source versions, source ranges and timeline placement to shots.",
+      "Spoken lyrics are not accepted as singing; separately generated singing is reviewed on a shared musical timeline.",
+      "Unknown multi-person targeting is not assumed to work with a mixed audio track.",
+      "Progress reports local blockers and parallel work without treating a main song as the entire sound stage.",
+      "Audio revisions invalidate only dependent deliverables; unchanged driving audio does not require new lip-sync generation."
     ]
   }
 }
