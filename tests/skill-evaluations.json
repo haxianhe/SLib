@@ -1,11 +1,11 @@
 {
   "run": {
-    "evaluated_at": "2026-10-27T05:02:25.361259+00:00",
-    "base_commit": "a62eac3bf31be73acc8fe28d2eeb399b7d85418b",
-    "skill_sources_sha256": "fcd99d8c7b051c7e498d1797220e0590a0e3976fd543c367c43ce49e97873133",
+    "evaluated_at": "2026-10-27T05:21:35.149443+00:00",
+    "base_commit": "f8a9ca1d20ceee73d3cf7698aabcc5c00bb7852f",
+    "skill_sources_sha256": "c5dd53bd1eae331e0338d85cbe89ea2b394cdd4b379dd812d1679e9f6632eff6",
     "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
     "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
-    "limitations": "Read-only static decision review of the revised ai-manju skill only; no independent forward test was rerun. Existing evaluations below are historical evidence retained verbatim, not results for this new digest. The digest identifies the current source snapshot, not fresh behavioral coverage of all skills. No media generation, API inference, browser launches, plugin installation or external writes were executed for this repository revision."
+    "limitations": "Read-only static decision review of ai-manju generic workflow and tool responsibilities; no independent forward test rerun. Historical evaluations and progress review retained, not rerun for this digest. No media generation, live app compatibility testing or plugin installation performed."
   },
   "evaluations": [
     {
@@ -89,6 +89,22 @@
       "runner": "Codex delegated agents in the implementation session",
       "model": "Inherited Codex session model; exact API model identifier was not exposed to the delegated agents",
       "limitations": "Read-only decision-level forward tests. No external writes, browser launches, image API calls, or live document connector calls were executed. Incremental addition: writing-review-briefs was evaluated separately during its creation, then copied byte-for-byte into this repository. Prior evaluations were retained, not rerun. The digest covers the combined skill sources. Incremental addition: ai-manju evaluated independently in a read-only baseline and skill-guided pass; previous evaluations were retained, not rerun. Combined digest now includes ai-manju references. No live CLI or editing-app compatibility was tested."
+    },
+    {
+      "evaluated_at": "2026-10-27T05:02:25.361259+00:00",
+      "base_commit": "a62eac3bf31be73acc8fe28d2eeb399b7d85418b",
+      "skill_sources_sha256": "fcd99d8c7b051c7e498d1797220e0590a0e3976fd543c367c43ce49e97873133",
+      "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
+      "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
+      "limitations": "Read-only static decision review of the revised ai-manju skill only; no independent forward test was rerun. Existing evaluations below are historical evidence retained verbatim, not results for this new digest. The digest identifies the current source snapshot, not fresh behavioral coverage of all skills. No media generation, API inference, browser launches, plugin installation or external writes were executed for this repository revision."
+    },
+    {
+      "evaluated_at": "2026-10-27T05:16:08.773646+00:00",
+      "base_commit": "f8a9ca1d20ceee73d3cf7698aabcc5c00bb7852f",
+      "skill_sources_sha256": "6dc9242aab867816198323e4cb7ac045f7570177dce641ee015ffb37a2769686",
+      "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
+      "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
+      "limitations": "Read-only static decision review of the revised ai-manju episode-progress interaction only; no independent forward test was rerun. Existing evaluations below are historical evidence retained verbatim, not results for this new digest. The digest includes the new progress reference and identifies the current source snapshot, not fresh behavioral coverage of all skills. No media generation, API inference, browser launches, plugin installation or external writes were executed for this repository revision."
     }
   ],
   "revision_review": {
@@ -103,6 +119,32 @@
       "Read-only scope does not permit generation as a credential test.",
       "Existing valid assets and authorization can be reused without repeated approvals.",
       "Shot, image and remote-task counts are independent."
+    ]
+  },
+  "progress_interaction_review": {
+    "skill": "ai-manju",
+    "method": "primary_agent_static_decision_review",
+    "independent_forward_test_rerun": false,
+    "scenarios": "tests/skill-scenarios.md#剧集进度交互的决策复核",
+    "reviewed_outcomes": [
+      "Episode-specific stage bars distinguish current-turn scope from whole-episode completion.",
+      "Reviewed artifact counts drive progress; submissions, elapsed time and candidate counts do not imply completion.",
+      "Episode summaries resume from verified artifacts without mixing other episodes or repeating existing authorization.",
+      "Changes invalidate only affected downstream artifacts and may reduce completion counts.",
+      "Music dependencies can advance audio first without skipping storyboard images.",
+      "Text-only delivery keeps progress in conversation without extra project files."
+    ]
+  },
+  "tool_workflow_review": {
+    "skill": "ai-manju",
+    "method": "primary_agent_static_decision_review",
+    "independent_forward_test_rerun": false,
+    "scenarios": "tests/skill-scenarios.md#通用流程与工具分工的决策复核",
+    "reviewed_outcomes": [
+      "Five stages specify Codex planning and images, Jimeng motion, Jianying sound and editing.",
+      "Dialogue, narration, action and music adjust dependencies without a duet-only template.",
+      "Unavailable tools produce explicit handoffs rather than claims of generated assets.",
+      "Explicit user tool choices override defaults."
     ]
   }
 }
