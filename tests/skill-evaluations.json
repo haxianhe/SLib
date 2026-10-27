@@ -1,11 +1,11 @@
 {
   "run": {
-    "evaluated_at": "2026-10-27T12:05:01.367908+00:00",
-    "base_commit": "d78aee64484c78841db294d0a343be690ee900d6",
-    "skill_sources_sha256": "13a20b962e9877bc6496f86880e6e450e23092e390f09c838f085896766153e3",
+    "evaluated_at": "2026-10-27T14:28:51.542348+00:00",
+    "base_commit": "c0001489afb16f23e4fda79e3aff328582f96010",
+    "skill_sources_sha256": "c47dfdb386ab75cb61fb2199bc2c4fbafd12ca380c57159e04c4b2692807fc75",
     "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
     "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
-    "limitations": "Read-only static decision review of ai-manju production routes, audio-to-shot handoff, dependency progress and scoped revision handling. Historical evaluations are retained verbatim; no independent forward test was rerun for this source snapshot. No media generation, paid submissions, live app compatibility tests or external writes were performed."
+    "limitations": "Read-only primary-agent static decision review of duet and rap prompt guidance. Historical evaluations retained without rerun; this digest identifies the new source snapshot, not fresh independent behavioral coverage. No audio generation, paid tasks, direct listening tests, application compatibility tests or plugin installation performed."
   },
   "evaluations": [
     {
@@ -121,6 +121,14 @@
       "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
       "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
       "limitations": "Read-only static decision review of plain-text ai-manju episode progress. Chinese status words replace symbolic progress indicators to avoid font rendering issues. No independent forward test or live UI rendering test was rerun; historical evaluations are retained verbatim. The digest identifies the current source snapshot, not fresh behavioral coverage of all skills. No media generation or external writes were performed."
+    },
+    {
+      "evaluated_at": "2026-10-27T12:05:01.367908+00:00",
+      "base_commit": "d78aee64484c78841db294d0a343be690ee900d6",
+      "skill_sources_sha256": "13a20b962e9877bc6496f86880e6e450e23092e390f09c838f085896766153e3",
+      "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
+      "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
+      "limitations": "Read-only static decision review of ai-manju production routes, audio-to-shot handoff, dependency progress and scoped revision handling. Historical evaluations are retained verbatim; no independent forward test was rerun for this source snapshot. No media generation, paid submissions, live app compatibility tests or external writes were performed."
     }
   ],
   "revision_review": {
@@ -176,6 +184,20 @@
       "Unknown multi-person targeting is not assumed to work with a mixed audio track.",
       "Progress reports local blockers and parallel work without treating a main song as the entire sound stage.",
       "Audio revisions invalidate only dependent deliverables; unchanged driving audio does not require new lip-sync generation."
+    ]
+  },
+  "duet_prompt_review": {
+    "skill": "ai-manju",
+    "method": "primary_agent_static_decision_review",
+    "independent_forward_test_rerun": false,
+    "scenarios": "tests/skill-scenarios.md#对唱音频提示词经验的决策复核",
+    "reviewed_outcomes": [
+      "Vivid vocal contrast and actionable delivery guide natural musical phrasing without default per-line hard timecodes.",
+      "Explicit supported timing workflows remain possible; text-only duration requests do not guarantee exact output.",
+      "Audio-only borrowing preserves existing image and video plans.",
+      "Existing successful qualities and requested chorus are retained during targeted revision.",
+      "ASR and file duration do not establish listening, rap quality or duet acceptance.",
+      "State the total duration at the opening and in a separate footer after lyrics, parameterized per work; verify actual file duration without claiming guaranteed timing or imposing per-line slots."
     ]
   }
 }
