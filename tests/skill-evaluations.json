@@ -1,11 +1,11 @@
 {
   "run": {
-    "evaluated_at": "2026-10-27T05:21:35.149443+00:00",
-    "base_commit": "f8a9ca1d20ceee73d3cf7698aabcc5c00bb7852f",
-    "skill_sources_sha256": "c5dd53bd1eae331e0338d85cbe89ea2b394cdd4b379dd812d1679e9f6632eff6",
+    "evaluated_at": "2026-10-27T05:25:15.366844+00:00",
+    "base_commit": "8a4686c6c89fe47b18306befc237d2919bfdda0a",
+    "skill_sources_sha256": "8cb1cdf9482564c5f9bec28ab229bf24fbb1f80cc9b9e929d467c0280807cbcd",
     "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
     "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
-    "limitations": "Read-only static decision review of ai-manju generic workflow and tool responsibilities; no independent forward test rerun. Historical evaluations and progress review retained, not rerun for this digest. No media generation, live app compatibility testing or plugin installation performed."
+    "limitations": "Read-only static decision review of plain-text ai-manju episode progress. Chinese status words replace symbolic progress indicators to avoid font rendering issues. No independent forward test or live UI rendering test was rerun; historical evaluations are retained verbatim. The digest identifies the current source snapshot, not fresh behavioral coverage of all skills. No media generation or external writes were performed."
   },
   "evaluations": [
     {
@@ -105,6 +105,14 @@
       "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
       "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
       "limitations": "Read-only static decision review of the revised ai-manju episode-progress interaction only; no independent forward test was rerun. Existing evaluations below are historical evidence retained verbatim, not results for this new digest. The digest includes the new progress reference and identifies the current source snapshot, not fresh behavioral coverage of all skills. No media generation, API inference, browser launches, plugin installation or external writes were executed for this repository revision."
+    },
+    {
+      "evaluated_at": "2026-10-27T05:21:35.149443+00:00",
+      "base_commit": "f8a9ca1d20ceee73d3cf7698aabcc5c00bb7852f",
+      "skill_sources_sha256": "c5dd53bd1eae331e0338d85cbe89ea2b394cdd4b379dd812d1679e9f6632eff6",
+      "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
+      "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
+      "limitations": "Read-only static decision review of ai-manju generic workflow and tool responsibilities; no independent forward test rerun. Historical evaluations and progress review retained, not rerun for this digest. No media generation, live app compatibility testing or plugin installation performed."
     }
   ],
   "revision_review": {
@@ -132,7 +140,8 @@
       "Episode summaries resume from verified artifacts without mixing other episodes or repeating existing authorization.",
       "Changes invalidate only affected downstream artifacts and may reduce completion counts.",
       "Music dependencies can advance audio first without skipping storyboard images.",
-      "Text-only delivery keeps progress in conversation without extra project files."
+      "Text-only delivery keeps progress in conversation without extra project files.",
+      "Progress uses Chinese status words and ordinary numbers instead of graphical symbols; reviewed statically, not tested in the user UI."
     ]
   },
   "tool_workflow_review": {
