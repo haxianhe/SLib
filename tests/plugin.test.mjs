@@ -51,6 +51,7 @@ function skillSourceDigest() {
     "skills/ai-manju/references/automation.md",
     "skills/ai-manju/references/progress.md",
     "skills/ai-manju/references/audio-handoff.md",
+    "skills/ai-manju/references/duet-video-prompting.md",
   );
   const digest = createHash("sha256");
   for (const path of paths.sort()) {
