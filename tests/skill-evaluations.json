@@ -1,11 +1,11 @@
 {
   "run": {
-    "evaluated_at": "2026-10-28T05:58:31+00:00",
+    "evaluated_at": "2026-10-29T11:17:00Z",
     "base_commit": "135a991f928c770867efe2fc2ddece767d3f3cde",
-    "skill_sources_sha256": "88b82ef37fb58823e0aa9b4df32811409f6882791dd15546bfca1a80be802884",
+    "skill_sources_sha256": "edb609fd9de87959788aa310e7e1c74741d3b3e706fa71f98c9d87f72169ae7e",
     "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
     "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
-    "limitations": "Read-only primary-agent static decision review of the updated Jimeng interface workflow and sound handoff. Historical independent evaluations retained without rerun. The digest identifies the current source snapshot, not fresh independent behavioral coverage. No media generation, paid submissions, direct playback tests, application compatibility tests or plugin installation performed."
+    "limitations": "Read-only primary-agent static review of the merged reference/story and final publication handoff rules. Both branches' review records and historical evaluations are retained; no independent forward test rerun during conflict resolution. The digest identifies the merged source snapshot, not fresh behavioral coverage of all skills. No media generation, direct listening, application compatibility test, platform upload, publication or plugin installation performed."
   },
   "evaluations": [
     {
@@ -137,6 +137,14 @@
       "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
       "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
       "limitations": "Read-only primary-agent static decision review of duet and rap prompt guidance. Historical evaluations retained without rerun; this digest identifies the new source snapshot, not fresh independent behavioral coverage. No audio generation, paid tasks, direct listening tests, application compatibility tests or plugin installation performed."
+    },
+    {
+      "evaluated_at": "2026-10-28T01:15:03.479127+00:00",
+      "base_commit": "dec4060c47522b6186288dd60854386d96399511",
+      "skill_sources_sha256": "98cec9f6f4001abbdb71b482e455256bbf2c1d4cfddafb7f2143b0ee96661e8f",
+      "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
+      "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
+      "limitations": "Read-only primary-agent static decision review of the latest duet video prompt guidance and scoped baseline edits. Historical independent evaluations retained without rerun. The digest now includes duet-video-prompting.md and identifies the reviewed source snapshot, not fresh independent behavioral coverage. No media generation, paid submissions, direct playback tests, application compatibility tests or plugin installation performed."
     }
   ],
   "revision_review": {
@@ -251,6 +259,20 @@
       "Available models, lyrics, voices, duration and downloads are checked in the actual interface before claiming support or success.",
       "Login and membership do not authorize generation; existing user authorization remains valid within its scope.",
       "Unknown task status is checked in the interface before a paid retry; historical CLI and API evaluations remain historical evidence."
+    ]
+  },
+  "release_handoff_review": {
+    "skill": "ai-manju",
+    "method": "primary_agent_static_decision_review",
+    "independent_forward_test_rerun": false,
+    "scenarios": "tests/skill-scenarios.md#最终发布交付包的决策复核",
+    "reviewed_outcomes": [
+      "A requested final publication handoff uses real media copies in one independently portable folder and verifies SHA256.",
+      "Text-only planning does not create a premature publication bundle.",
+      "Missing unauthorized media is reported rather than generated or faked.",
+      "Revisions synchronize delivery copies and provenance, with one current publication record.",
+      "Episode-specific deliverables stay in the content project; account planning only links the entry.",
+      "Material readiness does not imply publication, platform preview acceptance or new permissions."
     ]
   }
 }
