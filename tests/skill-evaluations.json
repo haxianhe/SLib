@@ -1,11 +1,11 @@
 {
   "run": {
-    "evaluated_at": "2026-10-28T01:15:03.479127+00:00",
-    "base_commit": "dec4060c47522b6186288dd60854386d96399511",
-    "skill_sources_sha256": "98cec9f6f4001abbdb71b482e455256bbf2c1d4cfddafb7f2143b0ee96661e8f",
+    "evaluated_at": "2026-10-28T05:58:31+00:00",
+    "base_commit": "135a991f928c770867efe2fc2ddece767d3f3cde",
+    "skill_sources_sha256": "88b82ef37fb58823e0aa9b4df32811409f6882791dd15546bfca1a80be802884",
     "runner": "Codex primary-agent manual decision review; historical delegated evaluations retained",
     "model": "Current exact API model identifier not exposed; historical evaluation model details retained in previous_runs",
-    "limitations": "Read-only primary-agent static decision review of the latest duet video prompt guidance and scoped baseline edits. Historical independent evaluations retained without rerun. The digest now includes duet-video-prompting.md and identifies the reviewed source snapshot, not fresh independent behavioral coverage. No media generation, paid submissions, direct playback tests, application compatibility tests or plugin installation performed."
+    "limitations": "Read-only primary-agent static decision review of the updated Jimeng interface workflow and sound handoff. Historical independent evaluations retained without rerun. The digest identifies the current source snapshot, not fresh independent behavioral coverage. No media generation, paid submissions, direct playback tests, application compatibility tests or plugin installation performed."
   },
   "evaluations": [
     {
@@ -219,6 +219,38 @@
       "Nameplates and lyric subtitles replace conflicting no-text requirements without changing approved music or generating media.",
       "Prompt text and actual interface parameters are checked separately; unavailable settings are marked unverified.",
       "Screenshots and user feedback do not establish motion, lip-sync quality or causal rules about prompt constraints."
+    ]
+  },
+  "reference_story_review": {
+    "skill": "ai-manju",
+    "reviewed_on": "2026-10-29",
+    "method": "delegated_read_only_text_behavior_review_before_and_after_targeted_changes",
+    "agent": "skill_baseline",
+    "scenarios": "tests/skill-scenarios.md#共鸣策划与参考片研究场景",
+    "prompts": [
+      "Read current ai-manju skill and references. Apply to historical music short seeking ordinary people's contemporary resonance, screenshot reference, 60s master audio and 15s task limit; explain creative, storyboard and evidence decisions without executing media work.",
+      "Full reference has 129 scene candidates including 34 adjacent gaps below 0.5s; autocorrelation gives 65/130 BPM and audio listening is unavailable. User requests guaranteed viral template, precise shot count and genre. State actual delivery decisions and missing guidance.",
+      "Reread updated skill, story-and-emotion, reference-analysis and shot/audio additions. Apply the same scenarios, check overgeneralization and conflicts; do not modify files or execute media tasks."
+    ],
+    "baseline_result": "The agent made cautious decisions using general reasoning but identified missing explicit methods for contemporary resonance, evidence levels, master timeline versus generation windows, scene-candidate validation, tempo ambiguity and unsupported success claims. No fabricated baseline failure is asserted.",
+    "updated_response": "Use concrete shared pressures, differentiated character roles, visible emotional changes and shot purposes. Screenshots support static observations only. Separate master timeline, shots and generation windows; preserve continuous master audio and check boundary phrasing. Report 129 as candidates without subtracting 34 into a shot count. Report 65/130 as half/double-time candidates, with genre and listening conclusions unverified. Offer testable adaptation methods without guaranteeing virality.",
+    "reviewed_outcomes": [
+      "Targeted text scenarios found no substantive conflict; project-specific settings remain conditional rather than universal.",
+      "A minor possible all-shots-depth reading was clarified: depth layers and angle coverage are chosen by expressive need, not required in every shot.",
+      "New references are included in the current source digest. Historical evaluations and their dates remain unchanged."
+    ],
+    "limitations": "Two targeted delegated text scenarios, not a full fresh evaluation of every skill or project. No media download, direct listening, image/video generation, editing application test or publication experiment was performed in this review. The final depth-wording clarification received primary-agent static review only."
+  },
+  "jimeng_interface_review": {
+    "skill": "ai-manju",
+    "method": "primary_agent_static_decision_review",
+    "independent_forward_test_rerun": false,
+    "scenarios": "tests/skill-scenarios.md#即梦界面生成与声音交接的决策复核",
+    "reviewed_outcomes": [
+      "Jimeng's selected interface handles video and audio generation; Jianying organizes sound and edits the final film.",
+      "Available models, lyrics, voices, duration and downloads are checked in the actual interface before claiming support or success.",
+      "Login and membership do not authorize generation; existing user authorization remains valid within its scope.",
+      "Unknown task status is checked in the interface before a paid retry; historical CLI and API evaluations remain historical evidence."
     ]
   }
 }
